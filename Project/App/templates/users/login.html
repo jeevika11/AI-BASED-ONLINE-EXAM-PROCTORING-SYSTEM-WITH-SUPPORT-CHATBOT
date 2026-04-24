@@ -1,0 +1,280 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <title>Login</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+  />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f9;
+            background: url(data:image/jpeg;base64,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) no-repeat;
+            background-size: cover;
+    }
+
+    #FormContainer {
+      border: 2px solid rgba(255, 255, 255, 0.4);
+      width: 760px;
+      border-radius: 15px;
+      box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      padding: 30px;
+      align-items: center;
+      height: 550px;
+      background: linear-gradient(135deg, #a8dadc, #f1faee);
+      animation: fadeIn 1.5s ease-out;
+      transform: scale(1);
+      transition: transform 0.3s ease-in-out;
+    }
+
+    #FormContainer:hover {
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    #FormContainer input,
+    #FormContainer select,
+    #FormContainer button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: rgba(255, 255, 255, 0.3);
+      color: #333;
+      font-size: 14px;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #FormContainer input:focus,
+    #FormContainer select:focus,
+    #FormContainer button:hover {
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #FormContainer button {
+      background-color: #f1faee;
+      color: #333;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    #FormContainer button:hover {
+      background-color: #a8dadc;
+    }
+
+    h1 {
+      color: #34495e;
+      font-size: 2rem;
+      font-weight: 600;
+      text-align: center;
+      grid-column: span 2;
+      margin-bottom: 20px;
+    }
+
+    .ImgContainer {
+      border-radius: 10px;
+      background: url('https://plus.unsplash.com/premium_photo-1661587727551-7f7aac005fe3?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZW1wbG95ZWV8ZW58MHwxfDB8fHww&auto=format&fit=crop&q=60&w=500') no-repeat center center;
+      background-size: cover;
+      height: 100%;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+
+    form .form-group {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    form label {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: #34495e;
+      margin-bottom: 5px;
+    }
+
+    form input,
+    form select {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+      background-color: #fff;
+      width: 100%;
+      outline: none;
+      color: #495057;
+      margin-bottom: 10px;
+      transition: border-color 0.3s;
+    }
+
+    form input:focus,
+    form select:focus {
+      border-color: #007bff;
+    }
+
+    form button {
+      align-self: center;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1.1rem;
+      color: #fff;
+      background-color: #007bff;
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    form button:hover {
+      background-color: #0056b3;
+    }
+
+    .links {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .links a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .links a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #999;
+    }
+
+    @media (max-width: 800px) {
+      .ImgContainer {
+        display: none;
+      }
+
+      #FormContainer {
+        grid-template-columns: 1fr;
+        width: 90%;
+      }
+    }
+
+    @media (max-width: 430px) {
+      #FormContainer {
+        width: 100%;
+        border-radius: 0;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="FormContainer">
+    <form method="POST">
+      {% csrf_token %}
+
+      <!-- ✅ Show Django messages (like "Customer accounts cannot log in here") -->
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-warning" role="alert" style="color: darkred; text-align: center; margin-bottom: 15px;">
+            {{ message }}
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- ✅ Show form validation errors -->
+      {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible" role="alert">
+          <div id="form_errors">
+            {% for key, value in form.errors.items %}
+              <strong style="color: darksalmon;">{{ value }}</strong>
+            {% endfor %}
+          </div>
+        </div>
+      {% endif %}
+
+      <h1>Login</h1>
+
+      <div class="form-group">
+        <label for="username">Username</label>
+        {{ form.username }}
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        {{ form.password }}
+        <i class="fa fa-eye toggle-password" onclick="togglePassword(this)"></i>
+      </div>
+
+      <button type="submit">Login</button>
+
+      <div class="links">
+        <a href="{% url 'users-register' %}">Create an Account</a>
+      </div>
+    </form>
+    <div class="ImgContainer"></div>
+  </div>
+
+  <script>
+    function togglePassword(element) {
+      const input = element.previousElementSibling;
+      if (input.type === "password") {
+        input.type = "text";
+        element.classList.remove("fa-eye");
+        element.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        element.classList.remove("fa-eye-slash");
+        element.classList.add("fa-eye");
+      }
+    }
+  </script>
+</body>
+
+</html>

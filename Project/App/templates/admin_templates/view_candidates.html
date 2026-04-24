@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidates Analysis - {{ job.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f0f4ff 0%, #e6f0ff 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 25px 30px;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.2;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+
+        .job-info h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .job-info p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .stats-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 180px;
+        }
+
+        .stats-badge .count {
+            font-size: 2.5rem;
+            font-weight: 700;
+            display: block;
+            line-height: 1;
+        }
+
+        .stats-badge .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border-radius: 10px;
+            border: none;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: var(--transition);
+            text-decoration: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back {
+            background: white;
+            color: var(--dark);
+            border: 2px solid #e2e8f0;
+        }
+
+        .btn-back:hover {
+            background: #f8fafc;
+            border-color: var(--primary);
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 10px 20px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            animation: fadeIn 0.6s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .stat-card.selected::before { background: var(--success); }
+        .stat-card.rejected::before { background: var(--danger); }
+        .stat-card.pending::before { background: var(--warning); }
+        .stat-card.total::before { background: var(--primary); }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-icon.selected { background: linear-gradient(135deg, #10b981, #059669); }
+        .stat-icon.rejected { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .stat-icon.pending { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .stat-icon.total { background: linear-gradient(135deg, #3b82f6, #1d4ed8); }
+
+        .stat-value {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Candidates Table */
+        .candidates-container {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px;
+            border-bottom: 1px solid #e2e8f0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .table-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 300px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px 12px 45px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 0.9rem;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            padding: 0 20px 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        thead {
+            background: #f1f5f9;
+        }
+
+        th {
+            padding: 18px 15px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
+            white-space: nowrap;
+        }
+
+        tbody tr {
+            transition: var(--transition);
+            border-bottom: 1px solid #f1f5f9;
+            animation: slideIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+            transform: translateX(5px);
+        }
+
+        td {
+            padding: 20px 15px;
+            color: var(--dark);
+        }
+
+        .candidate-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .candidate-email {
+            color: #64748b;
+            font-size: 0.85rem;
+        }
+
+        /* Score Cells */
+        .score-cell {
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+            min-width: 60px;
+            transition: var(--transition);
+        }
+
+        .score-cell.selected {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border: 2px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .score-cell.rejected {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 2px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .score-cell.not-attended {
+            background: rgba(156, 163, 175, 0.1);
+            color: #6b7280;
+            border: 2px solid rgba(156, 163, 175, 0.2);
+        }
+
+        .score-cell:hover {
+            transform: scale(1.05);
+        }
+
+        /* Overall Result */
+        .result-badge {
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+            min-width: 100px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.85rem;
+            transition: var(--transition);
+        }
+
+        .result-badge.selected {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+        }
+
+        .result-badge.rejected {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .result-badge.not-attended {
+            background: linear-gradient(135deg, #6b7280, #4b5563);
+            color: white;
+        }
+
+        .result-badge:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            margin-top: 30px;
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            animation: fadeIn 1s ease;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .progress-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 5px;
+            transition: width 1s ease-in-out;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+
+        .progress-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 80px 20px;
+            color: #64748b;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            color: #cbd5e1;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #475569;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 25px;
+            margin-top: 50px;
+            color: #64748b;
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .filters {
+                justify-content: center;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .filter-btn {
+                justify-content: center;
+            }
+        }
+
+        /* Print Styles */
+        @media print {
+            .btn, .filters, .search-box, .footer {
+                display: none;
+            }
+            
+            .candidates-container {
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <div class="job-info">
+                <h1>
+                    <i class="fas fa-users"></i>
+                    Candidates Analysis
+                </h1>
+                <p>Job Position: <strong>{{ job.title }}</strong> • Posted: {{ job.created_at|date:"M d, Y" }}</p>
+            </div>
+            <div class="stats-badge">
+                <span class="count">{{ candidate_data|length }}</span>
+                <span class="label">Total Candidates</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+        <a href="{% url 'admin-dashboard' %}" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i>
+            Back to Dashboard
+        </a>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-users"></i>
+                All Candidates
+            </button>
+            <button class="filter-btn" data-filter="selected">
+                <i class="fas fa-check-circle"></i>
+                Selected
+            </button>
+            <button class="filter-btn" data-filter="rejected">
+                <i class="fas fa-times-circle"></i>
+                Rejected
+            </button>
+            <button class="filter-btn" data-filter="not-attended">
+                <i class="fas fa-clock"></i>
+                Not Attended
+            </button>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="stats-grid">
+        <div class="stat-card total">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-value">{{ candidate_data|length }}</div>
+                    <div class="stat-label">Total Candidates</div>
+                </div>
+                <div class="stat-icon total">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stat-card selected">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-value" id="selectedCount">0</div>
+                    <div class="stat-label">Selected</div>
+                </div>
+                <div class="stat-icon selected">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stat-card rejected">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-value" id="rejectedCount">0</div>
+                    <div class="stat-label">Rejected</div>
+                </div>
+                <div class="stat-icon rejected">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stat-card pending">
+            <div class="stat-header">
+                <div>
+                    <div class="stat-value" id="pendingCount">0</div>
+                    <div class="stat-label">Not Attended</div>
+                </div>
+                <div class="stat-icon pending">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-header">
+            <h3><i class="fas fa-chart-line"></i> Selection Progress</h3>
+            <span id="progressPercentage">0%</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        </div>
+        <div class="progress-labels">
+            <span>Selected: <strong id="selectedLabel">0</strong></span>
+            <span>Rejected: <strong id="rejectedLabel">0</strong></span>
+            <span>Not Attended: <strong id="pendingLabel">0</strong></span>
+        </div>
+    </div>
+
+    <!-- Candidates Table -->
+    <div class="candidates-container">
+        <div class="table-header">
+            <h2><i class="fas fa-list-alt"></i> Candidate Details</h2>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search candidates...">
+            </div>
+        </div>
+        
+        <div class="table-responsive">
+            {% if candidate_data %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Candidate</th>
+                        <th>ATS Score</th>
+                        <th>Aptitude</th>
+                        <th>Coding</th>
+                        <th>Technical HR</th>
+                        <th>Final HR</th>
+                        <th>Overall Result</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for c in candidate_data %}
+                    <tr class="candidate-row" 
+                        data-result="{{ c.overall_result|lower }}" 
+                        data-name="{{ c.name|lower }}" 
+                        data-email="{{ c.email|lower }}"
+                        style="animation-delay: {{ forloop.counter0|add:0.1 }}s">
+                        <td>
+                            <div class="candidate-name">{{ c.name }}</div>
+                            <div class="candidate-email">{{ c.email }}</div>
+                        </td>
+                        
+                        <td>
+                            <div class="score-cell 
+                                {% if c.ats_score == '-' %}not-attended
+                                {% elif c.ats_score >= 50 %}selected
+                                {% else %}rejected{% endif %}">
+                                {{ c.ats_score }}
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="score-cell 
+                                {% if c.aptitude_score == '-' %}not-attended
+                                {% elif c.aptitude_score >= 50 %}selected
+                                {% else %}rejected{% endif %}">
+                                {{ c.aptitude_score }}
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="score-cell 
+                                {% if c.coding_score == '-' %}not-attended
+                                {% elif c.coding_score >= 50 %}selected
+                                {% else %}rejected{% endif %}">
+                                {{ c.coding_score }}
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="score-cell 
+                                {% if c.technical_hr_score == '-' %}not-attended
+                                {% elif c.technical_hr_score >= 50 %}selected
+                                {% else %}rejected{% endif %}">
+                                {{ c.technical_hr_score }}
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="score-cell 
+                                {% if c.final_hr_score == '-' %}not-attended
+                                {% elif c.final_hr_score >= 50 %}selected
+                                {% else %}rejected{% endif %}">
+                                {{ c.final_hr_score }}
+                            </div>
+                        </td>
+                        
+                        <td>
+                            <div class="result-badge 
+                                {% if c.overall_result == 'Selected' %}selected
+                                {% elif c.overall_result == 'Rejected' %}rejected
+                                {% else %}not-attended{% endif %}">
+                                {{ c.overall_result }}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="empty-state">
+                <i class="fas fa-user-friends"></i>
+                <h3>No Candidates Yet</h3>
+                <p>No candidates have applied for this job position yet.</p>
+                <p style="margin-top: 20px; color: #94a3b8;">
+                    <i class="fas fa-info-circle"></i>
+                    Candidates will appear here once they apply and complete the assessment.
+                </p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>© 2023 Recruitment Analytics | {{ job.title }} | Generated on <span id="currentDate"></span></p>
+        <p style="margin-top: 10px; font-size: 0.8rem; color: #94a3b8;">
+            <i class="fas fa-sync-alt"></i> Data updates in real-time | 
+            <i class="fas fa-download"></i> Press Ctrl+P to print report
+        </p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set current date
+            const now = new Date();
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // Calculate statistics
+            let selectedCount = 0;
+            let rejectedCount = 0;
+            let pendingCount = 0;
+            
+            const rows = document.querySelectorAll('.candidate-row');
+            rows.forEach(row => {
+                const result = row.dataset.result;
+                if (result.includes('selected')) selectedCount++;
+                else if (result.includes('rejected')) rejectedCount++;
+                else pendingCount++;
+            });
+            
+            // Update statistics
+            document.getElementById('selectedCount').textContent = selectedCount;
+            document.getElementById('rejectedCount').textContent = rejectedCount;
+            document.getElementById('pendingCount').textContent = pendingCount;
+            
+            // Update progress bar
+            const total = selectedCount + rejectedCount + pendingCount;
+            const selectedPercentage = total > 0 ? Math.round((selectedCount / total) * 100) : 0;
+            
+            document.getElementById('progressPercentage').textContent = `${selectedPercentage}%`;
+            document.getElementById('progressFill').style.width = `${selectedPercentage}%`;
+            
+            document.getElementById('selectedLabel').textContent = selectedCount;
+            document.getElementById('rejectedLabel').textContent = rejectedCount;
+            document.getElementById('pendingLabel').textContent = pendingCount;
+            
+            // Filter functionality
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    filterCandidates(filter);
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                filterBySearch(searchTerm);
+            });
+            
+            // Filter candidates
+            function filterCandidates(filter) {
+                const rows = document.querySelectorAll('.candidate-row');
+                
+                rows.forEach(row => {
+                    const result = row.dataset.result;
+                    
+                    if (filter === 'all') {
+                        row.style.display = '';
+                        row.style.animation = 'slideIn 0.3s ease';
+                    } else if (filter === 'selected' && result.includes('selected')) {
+                        row.style.display = '';
+                        row.style.animation = 'slideIn 0.3s ease';
+                    } else if (filter === 'rejected' && result.includes('rejected')) {
+                        row.style.display = '';
+                        row.style.animation = 'slideIn 0.3s ease';
+                    } else if (filter === 'not-attended' && result.includes('not-attended')) {
+                        row.style.display = '';
+                        row.style.animation = 'slideIn 0.3s ease';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Search filter
+            function filterBySearch(searchTerm) {
+                const rows = document.querySelectorAll('.candidate-row');
+                
+                rows.forEach(row => {
+                    const name = row.dataset.name;
+                    const email = row.dataset.email;
+                    
+                    if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                        row.style.display = '';
+                        row.style.animation = 'slideIn 0.3s ease';
+                    } else {
+                        row.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Add hover effects to score cells
+            const scoreCells = document.querySelectorAll('.score-cell');
+            scoreCells.forEach(cell => {
+                cell.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1)';
+                });
+                
+                cell.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Sort functionality (optional)
+            const headers = document.querySelectorAll('th');
+            headers.forEach((header, index) => {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', function() {
+                    sortTable(index);
+                });
+            });
+            
+            // Print functionality
+            document.addEventListener('keydown', function(e) {
+                if (e.ctrlKey && e.key === 'p') {
+                    e.preventDefault();
+                    window.print();
+                }
+            });
+            
+            // Auto-refresh simulation
+            setInterval(() => {
+                const progressFill = document.getElementById('progressFill');
+                const currentWidth = parseInt(progressFill.style.width);
+                if (currentWidth < selectedPercentage) {
+                    progressFill.style.width = `${currentWidth + 1}%`;
+                }
+            }, 100);
+            
+            // Add tooltips
+            const resultBadges = document.querySelectorAll('.result-badge');
+            resultBadges.forEach(badge => {
+                const result = badge.textContent.trim();
+                let tooltipText = '';
+                
+                if (result === 'Selected') {
+                    tooltipText = 'Candidate has been selected for the position';
+                } else if (result === 'Rejected') {
+                    tooltipText = 'Candidate has been rejected';
+                } else {
+                    tooltipText = 'Candidate has not completed all assessments';
+                }
+                
+                badge.title = tooltipText;
+            });
+        });
+        
+        // Simple table sort function
+        function sortTable(columnIndex) {
+            const table = document.querySelector('table');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            const isAsc = table.dataset.sortDirection === 'asc';
+            
+            rows.sort((a, b) => {
+                let aValue = a.cells[columnIndex].textContent.trim();
+                let bValue = b.cells[columnIndex].textContent.trim();
+                
+                // Handle numeric values
+                if (!isNaN(aValue) && !isNaN(bValue)) {
+                    aValue = parseFloat(aValue) || 0;
+                    bValue = parseFloat(bValue) || 0;
+                    return isAsc ? aValue - bValue : bValue - aValue;
+                }
+                
+                // Handle result badges
+                if (columnIndex === 6) {
+                    const order = { 'Selected': 1, 'Rejected': 2, 'Not Attended': 3 };
+                    aValue = order[aValue] || 4;
+                    bValue = order[bValue] || 4;
+                    return isAsc ? aValue - bValue : bValue - aValue;
+                }
+                
+                // String comparison
+                return isAsc ? 
+                    aValue.localeCompare(bValue) : 
+                    bValue.localeCompare(aValue);
+            });
+            
+            // Clear table
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+            
+            // Append sorted rows
+            rows.forEach((row, index) => {
+                row.style.animationDelay = `${index * 0.1}s`;
+                tbody.appendChild(row);
+            });
+            
+            // Toggle sort direction
+            table.dataset.sortDirection = isAsc ? 'desc' : 'asc';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1108 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Resume | AI-Powered Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .floating-doc {
+            position: absolute;
+            font-size: 2rem;
+            color: rgba(255, 255, 255, 0.1);
+            animation: floatDoc 20s infinite linear;
+        }
+
+        @keyframes floatDoc {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .upload-container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: slideUp 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .upload-header {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .header-text h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-text p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .ai-analysis-badge {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 15px 25px;
+            border-radius: 12px;
+            text-align: center;
+            min-width: 180px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .ai-analysis-badge .label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+
+        .ai-analysis-badge .icon {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+
+        /* Content Container */
+        .content-container {
+            padding: 40px;
+        }
+
+        /* Job Info Card */
+        .job-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            overflow: hidden;
+            border-left: 5px solid var(--primary);
+            transition: var(--transition);
+            animation: fadeIn 0.6s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .job-header {
+            background: linear-gradient(90deg, #f0f9ff, #e0f2fe);
+            padding: 25px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .job-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .job-meta {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #475569;
+            font-size: 0.9rem;
+        }
+
+        .meta-item i {
+            color: var(--primary);
+        }
+
+        .job-body {
+            padding: 25px;
+        }
+
+        .job-description {
+            color: #475569;
+            line-height: 1.7;
+            font-size: 1rem;
+        }
+
+        /* Upload Card */
+        .upload-card {
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            animation: fadeIn 0.8s ease;
+        }
+
+        .upload-card-header {
+            background: linear-gradient(90deg, var(--success), #059669);
+            color: white;
+            padding: 25px;
+        }
+
+        .upload-card-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .upload-card-body {
+            padding: 40px;
+        }
+
+        /* File Upload Area */
+        .upload-area {
+            position: relative;
+            border: 3px dashed #cbd5e1;
+            border-radius: 20px;
+            padding: 60px 40px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background: #f8fafc;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: var(--success);
+            background: rgba(16, 185, 129, 0.05);
+            transform: translateY(-5px);
+        }
+
+        .upload-area.dragover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            color: var(--success);
+            margin-bottom: 20px;
+            transition: var(--transition);
+        }
+
+        .upload-area:hover .upload-icon {
+            transform: scale(1.1);
+        }
+
+        .upload-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+
+        .upload-subtitle {
+            color: #64748b;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        .upload-requirements {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #e2e8f0;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+
+        .upload-requirements i {
+            color: var(--warning);
+        }
+
+        .file-input {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        /* File Preview */
+        .file-preview {
+            display: none;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 25px;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .file-preview.active {
+            display: block;
+        }
+
+        .preview-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .preview-header h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+        }
+
+        .remove-file {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .remove-file:hover {
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .file-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            color: white;
+        }
+
+        .file-details {
+            flex: 1;
+        }
+
+        .file-name {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            word-break: break-all;
+        }
+
+        .file-size {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .file-progress {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 15px;
+        }
+
+        .file-progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--success), #059669);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 4px;
+        }
+
+        /* Form Elements */
+        .form-container {
+            margin-top: 40px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 15px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background: white;
+            color: var(--dark);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+        }
+
+        /* Error Messages */
+        .error-messages {
+            list-style: none;
+            padding: 0;
+            margin-top: 15px;
+        }
+
+        .error-messages li {
+            color: var(--danger);
+            font-size: 0.9rem;
+            padding: 10px 15px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .error-messages li::before {
+            content: '⚠';
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            transition: transform 0.6s;
+        }
+
+        .submit-btn:hover::after {
+            transform: rotate(30deg) translate(20%, 20%);
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid var(--success);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* AI Analysis Preview */
+        .ai-preview {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 30px;
+            display: none;
+            animation: fadeIn 0.6s ease;
+        }
+
+        .ai-preview.active {
+            display: block;
+        }
+
+        .ai-preview h4 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            margin-bottom: 20px;
+        }
+
+        .ai-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .ai-feature {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .ai-feature i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .upload-container {
+                margin: 20px;
+            }
+
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .content-container {
+                padding: 25px;
+            }
+
+            .upload-card-body {
+                padding: 25px;
+            }
+
+            .upload-area {
+                padding: 40px 20px;
+            }
+
+            .job-meta {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .upload-header {
+                padding: 20px;
+            }
+
+            .header-text h1 {
+                font-size: 1.5rem;
+            }
+
+            .upload-area {
+                padding: 30px 15px;
+            }
+
+            .upload-icon {
+                font-size: 3rem;
+            }
+
+            .ai-features {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation" id="bgAnimation"></div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="spinner"></div>
+        <div style="color: var(--success); font-weight: 600; font-size: 1.2rem;">Analyzing Resume...</div>
+        <div style="color: #64748b; margin-top: 10px;">AI is extracting skills, experience, and qualifications</div>
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <div style="width: 20px; height: 20px; background: var(--success); border-radius: 50%; animation: pulse 1s infinite;"></div>
+            <div style="width: 20px; height: 20px; background: var(--primary); border-radius: 50%; animation: pulse 1s infinite 0.2s;"></div>
+            <div style="width: 20px; height: 20px; background: var(--accent); border-radius: 50%; animation: pulse 1s infinite 0.4s;"></div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="upload-container">
+        <!-- Header -->
+        <div class="upload-header">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1>
+                        <i class="fas fa-file-upload"></i>
+                        Upload Your Resume
+                    </h1>
+                    <p>AI-powered analysis to match you with the perfect opportunity</p>
+                </div>
+                
+                <div class="ai-analysis-badge">
+                    <div class="icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="label">AI Analysis Enabled</div>
+                    <div style="font-weight: 600;">Smart Match Technology</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Content -->
+        <div class="content-container">
+            <!-- Job Info Card -->
+            <div class="job-card">
+                <div class="job-header">
+                    <h2>
+                        <i class="fas fa-briefcase"></i>
+                        {{ candidate.job.title }}
+                    </h2>
+                    <div class="job-meta">
+                        <div class="meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ candidate.job.location }}</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span>${{ candidate.job.salary }}/year</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-user-tie"></i>
+                            <span>{{ candidate.job.job_type }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="job-body">
+                    <div class="job-description">
+                        {{ candidate.job.description|linebreaks }}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upload Card -->
+            <div class="upload-card">
+                <div class="upload-card-header">
+                    <h2>
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Upload Resume (PDF Only)
+                    </h2>
+                </div>
+                <div class="upload-card-body">
+                    <!-- Upload Area -->
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-icon">
+                            <i class="fas fa-file-pdf"></i>
+                        </div>
+                        <div class="upload-title">Drop your resume here</div>
+                        <div class="upload-subtitle">or click to browse files</div>
+                        <div class="upload-requirements">
+                            <i class="fas fa-info-circle"></i>
+                            PDF format only • Max 5MB
+                        </div>
+                        
+                        <!-- Actual File Input -->
+                        <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                            {% csrf_token %}
+                            <input type="file" 
+                                   name="{{ form.resume.name }}" 
+                                   id="{{ form.resume.id_for_label }}" 
+                                   class="file-input" 
+                                   accept=".pdf" 
+                                   required>
+                        </form>
+                    </div>
+
+                    <!-- File Preview -->
+                    <div class="file-preview" id="filePreview">
+                        <div class="preview-header">
+                            <h4>
+                                <i class="fas fa-file-alt"></i>
+                                Selected File
+                            </h4>
+                            <button type="button" class="remove-file" id="removeFile">
+                                <i class="fas fa-times"></i>
+                                Remove
+                            </button>
+                        </div>
+                        <div class="file-info">
+                            <div class="file-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name" id="fileName">resume.pdf</div>
+                                <div class="file-size" id="fileSize">2.4 MB</div>
+                            </div>
+                        </div>
+                        <div class="file-progress">
+                            <div class="file-progress-bar" id="fileProgressBar"></div>
+                        </div>
+                    </div>
+
+                    <!-- AI Analysis Preview -->
+                    <div class="ai-preview" id="aiPreview">
+                        <h4>
+                            <i class="fas fa-robot"></i>
+                            AI Analysis Preview
+                        </h4>
+                        <div class="ai-features">
+                            <div class="ai-feature">
+                                <i class="fas fa-search"></i>
+                                <span>Skills Extraction</span>
+                            </div>
+                            <div class="ai-feature">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Experience Analysis</span>
+                            </div>
+                            <div class="ai-feature">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Education Verification</span>
+                            </div>
+                            <div class="ai-feature">
+                                <i class="fas fa-percentage"></i>
+                                <span>Job Match Score</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error Messages -->
+                    {% if form.resume.errors %}
+                    <ul class="error-messages">
+                        {% for error in form.resume.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="submit-btn" id="submitBtn" form="uploadForm">
+                        <i class="fas fa-play-circle"></i>
+                        Upload & Analyze Resume
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create animated background elements
+            createBackgroundAnimation();
+            
+            // Setup file upload interactions
+            setupFileUpload();
+            
+            // Setup form submission
+            setupFormSubmission();
+            
+            // Setup drag and drop
+            setupDragAndDrop();
+        });
+        
+        function createBackgroundAnimation() {
+            const container = document.getElementById('bgAnimation');
+            const docIcons = ['📄', '📋', '📑', '📊', '📈', '📉', '💼', '🎓'];
+            
+            for (let i = 0; i < 12; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-doc';
+                element.textContent = docIcons[Math.floor(Math.random() * docIcons.length)];
+                
+                // Random properties
+                const left = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 15 + 15;
+                const fontSize = Math.random() * 2 + 1.5;
+                
+                element.style.left = `${left}%`;
+                element.style.fontSize = `${fontSize}rem`;
+                element.style.animationDelay = `${delay}s`;
+                element.style.animationDuration = `${duration}s`;
+                
+                container.appendChild(element);
+            }
+        }
+        
+        function setupFileUpload() {
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.querySelector('.file-input');
+            const filePreview = document.getElementById('filePreview');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const removeFileBtn = document.getElementById('removeFile');
+            const aiPreview = document.getElementById('aiPreview');
+            const submitBtn = document.getElementById('submitBtn');
+            const progressBar = document.getElementById('fileProgressBar');
+            
+            // File input change event
+            fileInput.addEventListener('change', function() {
+                if (this.files.length > 0) {
+                    const file = this.files[0];
+                    updateFilePreview(file);
+                    simulateUploadProgress();
+                }
+            });
+            
+            // Remove file button
+            removeFileBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                fileInput.value = '';
+                filePreview.classList.remove('active');
+                aiPreview.classList.remove('active');
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-play-circle"></i> Upload & Analyze Resume';
+            });
+            
+            // Update file preview
+            function updateFilePreview(file) {
+                // Validate file type
+                if (!file.type.includes('pdf')) {
+                    showError('Please upload a PDF file only');
+                    fileInput.value = '';
+                    return;
+                }
+                
+                // Validate file size (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    showError('File size must be less than 5MB');
+                    fileInput.value = '';
+                    return;
+                }
+                
+                // Update preview
+                fileName.textContent = file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                filePreview.classList.add('active');
+                aiPreview.classList.add('active');
+                
+                // Animate preview appearance
+                filePreview.style.animation = 'slideIn 0.5s ease';
+                aiPreview.style.animation = 'fadeIn 0.6s ease';
+            }
+            
+            // Simulate upload progress
+            function simulateUploadProgress() {
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += 5;
+                    progressBar.style.width = `${progress}%`;
+                    
+                    if (progress >= 100) {
+                        clearInterval(interval);
+                        progressBar.style.background = 'linear-gradient(90deg, var(--success), #059669)';
+                    } else if (progress > 50) {
+                        progressBar.style.background = 'linear-gradient(90deg, var(--primary), var(--accent))';
+                    }
+                }, 50);
+            }
+            
+            // Format file size
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+            
+            // Show error message
+            function showError(message) {
+                // Create error element
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-messages';
+                errorDiv.innerHTML = `<li>${message}</li>`;
+                
+                // Insert after upload area
+                uploadArea.parentNode.insertBefore(errorDiv, uploadArea.nextSibling);
+                
+                // Remove error after 3 seconds
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 3000);
+            }
+        }
+        
+        function setupDragAndDrop() {
+            const uploadArea = document.getElementById('uploadArea');
+            
+            // Drag over
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.classList.add('dragover');
+            });
+            
+            // Drag leave
+            uploadArea.addEventListener('dragleave', function() {
+                this.classList.remove('dragover');
+            });
+            
+            // Drop
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.classList.remove('dragover');
+                
+                if (e.dataTransfer.files.length) {
+                    const fileInput = document.querySelector('.file-input');
+                    fileInput.files = e.dataTransfer.files;
+                    fileInput.dispatchEvent(new Event('change'));
+                }
+            });
+        }
+        
+        function setupFormSubmission() {
+            const form = document.getElementById('uploadForm');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    const fileInput = document.querySelector('.file-input');
+                    
+                    // Validate file
+                    if (!fileInput.files.length) {
+                        e.preventDefault();
+                        showUploadError('Please select a PDF file to upload');
+                        return;
+                    }
+                    
+                    const file = fileInput.files[0];
+                    
+                    // Validate file type
+                    if (!file.type.includes('pdf')) {
+                        e.preventDefault();
+                        showUploadError('Please upload a PDF file only');
+                        return;
+                    }
+                    
+                    // Validate file size
+                    if (file.size > 5 * 1024 * 1024) {
+                        e.preventDefault();
+                        showUploadError('File size must be less than 5MB');
+                        return;
+                    }
+                    
+                    // Show loading overlay
+                    loadingOverlay.classList.add('active');
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Analyzing...';
+                    
+                    // Simulate analysis for better UX
+                    setTimeout(() => {
+                        // In real application, form would submit automatically
+                        // This just simulates a delay for better UX
+                        submitBtn.innerHTML = '<i class="fas fa-check-circle"></i> Analysis Complete!';
+                        setTimeout(() => {
+                            form.submit();
+                        }, 1000);
+                    }, 2000);
+                });
+            }
+            
+            function showUploadError(message) {
+                // Create error element
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'error-messages';
+                errorDiv.innerHTML = `<li>${message}</li>`;
+                
+                // Insert after submit button
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.parentNode.insertBefore(errorDiv, submitBtn);
+                
+                // Remove error after 3 seconds
+                setTimeout(() => {
+                    errorDiv.remove();
+                }, 3000);
+                
+                // Shake animation
+                submitBtn.style.animation = 'shake 0.5s ease';
+                setTimeout(() => {
+                    submitBtn.style.animation = '';
+                }, 500);
+            }
+        }
+    </script>
+</body>
+</html>
+{% endblock %}

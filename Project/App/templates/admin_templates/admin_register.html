@@ -1,0 +1,137 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Register</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    /* ---------- Background ---------- */
+    body {
+      background: linear-gradient(to right, #d7eaff, #b3d9ff);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* ---------- Card Style ---------- */
+    .card {
+      backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 6px 20px rgba(0, 100, 255, 0.2);
+      padding: 40px;
+      width: 100%;
+      max-width: 450px;
+      color: #003366;
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    /* ---------- Animation ---------- */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ---------- Header ---------- */
+    h3 {
+      text-align: center;
+      font-weight: 700;
+      color: #007bff;
+      margin-bottom: 25px;
+      letter-spacing: 1px;
+    }
+
+    /* ---------- Form Fields ---------- */
+    input, select {
+      border-radius: 10px !important;
+      border: 1px solid #a8c7ff;
+      padding: 10px;
+      width: 100%;
+      transition: all 0.3s ease-in-out;
+      background: #f8fbff;
+    }
+
+    input:focus, select:focus {
+      border-color: #007bff;
+      box-shadow: 0 0 8px rgba(0, 123, 255, 0.3);
+      outline: none;
+    }
+
+    /* ---------- Button ---------- */
+    .btn-custom {
+      background: linear-gradient(45deg, #66b2ff, #007bff);
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 600;
+      color: white;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+    }
+
+    .btn-custom:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #3399ff, #0066cc);
+    }
+
+    /* ---------- Link ---------- */
+    .login-link {
+      text-align: center;
+      margin-top: 15px;
+      color: #003366;
+    }
+
+    .login-link a {
+      color: #007bff;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+      color: #0056b3;
+    }
+
+    /* ---------- Alert ---------- */
+    .alert {
+      border-radius: 10px;
+      margin-bottom: 15px;
+      background-color: #e3f2fd;
+      color: #0d47a1;
+      border: 1px solid #bbdefb;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h3>Admin Registration</h3>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} text-center" role="alert">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit" class="btn btn-custom w-100 mt-3">Register</button>
+    </form>
+
+    <div class="login-link">
+      Already have an account? <a href="{% url 'admin-login' %}">Login here</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

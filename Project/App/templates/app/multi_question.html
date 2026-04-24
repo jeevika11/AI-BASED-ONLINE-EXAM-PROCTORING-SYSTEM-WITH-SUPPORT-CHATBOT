@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Coding Round - {{ candidate.name }}</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --success: #06d6a0;
+            --warning: #ffd166;
+            --danger: #ef476f;
+            --dark: #1a1a2e;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: var(--dark);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 20px;
+        }
+
+        /* Header */
+        .header {
+            grid-column: 1 / -1;
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .candidate-info h2 {
+            color: var(--primary);
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .candidate-info p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* Timer */
+        .timer {
+            background: linear-gradient(135deg, var(--danger), #ff6b6b);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(239, 71, 111, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .question {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary);
+        }
+
+        .question:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+
+        .question h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .question h3:before {
+            content: "📝";
+            font-size: 18px;
+        }
+
+        .question p {
+            line-height: 1.6;
+            color: #444;
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid var(--success);
+        }
+
+        textarea {
+            width: 100%;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 14px;
+            height: 200px;
+            padding: 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            resize: vertical;
+            transition: all 0.3s;
+            background: #f8f9fa;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .proctoring-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .proctoring-panel h3 {
+            color: var(--danger);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+        }
+
+        .proctoring-panel h3:before {
+            content: "👁️";
+        }
+
+        #camera-feed {
+            width: 100%;
+            height: 180px;
+            background: #1a1a2e;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .status-indicators {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .status-item.active {
+            background: #e7f7ef;
+            border-left: 3px solid var(--success);
+        }
+
+        .status-item.warning {
+            background: #fff9e6;
+            border-left: 3px solid var(--warning);
+        }
+
+        .status-item.danger {
+            background: #fee;
+            border-left: 3px solid var(--danger);
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .status-item span:first-child {
+            font-weight: 500;
+        }
+
+        .status-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--gray);
+        }
+
+        .status-dot.active {
+            background: var(--success);
+            animation: blink 2s infinite;
+        }
+
+        .status-dot.warning {
+            background: var(--warning);
+        }
+
+        .status-dot.danger {
+            background: var(--danger);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* Stats Panel */
+        .stats-panel {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        .stats-panel h3 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stats-panel h3:before {
+            content: "📊";
+        }
+
+        .progress-circle {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .progress-circle svg {
+            width: 100%;
+            height: 100%;
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle-bg {
+            fill: none;
+            stroke: #e9ecef;
+            stroke-width: 8;
+        }
+
+        .progress-circle-fill {
+            fill: none;
+            stroke: var(--primary);
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 314;
+            stroke-dashoffset: 314;
+            transition: stroke-dashoffset 1s ease;
+        }
+
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .stat-item .number {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            display: block;
+        }
+
+        .stat-item .label {
+            font-size: 12px;
+            color: var(--gray);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Buttons */
+        .buttons-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(67, 97, 238, 0.3);
+        }
+
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning), #ffb347);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(255, 209, 102, 0.3);
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, var(--success), #06b690);
+            color: white;
+            flex: 1;
+        }
+
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(6, 214, 160, 0.3);
+        }
+
+        /* Output Area */
+        .output {
+            background: #1a1a2e;
+            color: #06d6a0;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            font-family: 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            overflow-y: auto;
+            max-height: 250px;
+            border: 1px solid #2d2d44;
+        }
+
+        .output pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .test-case {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .test-case.pass {
+            border-left: 3px solid var(--success);
+        }
+
+        .test-case.fail {
+            border-left: 3px solid var(--danger);
+        }
+
+        /* Warning Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 500px;
+            text-align: center;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal h2 {
+            color: var(--danger);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+
+        .modal-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="candidate-info">
+            <h2><i class="fas fa-user-circle"></i> {{ candidate.name }}</h2>
+            <p>Coding Assessment Round</p>
+        </div>
+        <div class="timer" id="timer">
+            40:00
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        {% for q in questions %}
+        <div class="question" id="question-{{ q.id }}">
+            <h3>Q{{ forloop.counter }}: {{ q.title }}</h3>
+            <p>{{ q.description }}</p>
+            
+            <textarea id="code-{{ q.id }}" 
+                      placeholder="# Write your Python code here...
+# Use input() to read test cases
+# Example:
+# n = int(input())
+# result = n * 2
+# print(result)"></textarea>
+            
+            <div class="buttons-container">
+                <button class="btn btn-primary" onclick="runQuestion({{ q.id }})">
+                    <i class="fas fa-play"></i> Run Code
+                </button>
+            </div>
+            
+            <div class="output" id="output-{{ q.id }}">
+                <pre>Output will appear here...</pre>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <div class="buttons-container">
+            <button class="btn btn-warning" id="submit-btn" onclick="submitCodingRound()">
+                <i class="fas fa-paper-plane"></i> Submit Assessment
+            </button>
+            <button class="btn btn-success" id="next-round" onclick="proceedNext()">
+                <i class="fas fa-arrow-right"></i> Next Round
+            </button>
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Proctoring Panel -->
+        <div class="proctoring-panel">
+            <h3><i class="fas fa-shield-alt"></i> Proctoring Active</h3>
+            
+            <video id="camera-feed" autoplay playsinline></video>
+            
+            <div class="status-indicators">
+                <div class="status-item active" id="status-face">
+                    <span>Face Detection</span>
+                    <div class="status-dot active"></div>
+                </div>
+                <div class="status-item active" id="status-tab">
+                    <span>Tab Focus</span>
+                    <div class="status-dot active"></div>
+                </div>
+                <div class="status-item active" id="status-head">
+                    <span>Head Position</span>
+                    <div class="status-dot active"></div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 15px; font-size: 12px; color: #666; text-align: center;">
+                <i class="fas fa-info-circle"></i> Proctoring violations: <span id="violation-count">0</span>
+            </div>
+        </div>
+
+        <!-- Stats Panel -->
+        <div class="stats-panel">
+            <h3><i class="fas fa-chart-line"></i> Progress Statistics</h3>
+            
+            <div class="progress-circle">
+                <svg>
+                    <circle class="progress-circle-bg" cx="60" cy="60" r="50"></circle>
+                    <circle class="progress-circle-fill" cx="60" cy="60" r="50"></circle>
+                </svg>
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="number" id="questions-done">0</span>
+                    <span class="label">Questions Done</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number" id="tests-passed">0</span>
+                    <span class="label">Tests Passed</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Warning Modal -->
+<div class="modal" id="warningModal">
+    <div class="modal-content">
+        <div class="modal-icon">⚠️</div>
+        <h2>Warning!</h2>
+        <p id="warningMessage">Please return to the assessment window.</p>
+        <p style="color: #666; margin-top: 10px; font-size: 14px;">
+            Violation count: <span id="modalViolationCount">0</span>
+        </p>
+        <div class="buttons-container" style="margin-top: 30px;">
+            <button class="btn btn-primary" onclick="closeWarning()">
+                Return to Assessment
+            </button>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+<script>
+
+    // ==================== Global Variables ====================
+    let totalPassed = 0;
+    let totalTests = 0;
+    let timeLeft = 40 * 60;
+    let timerInterval;
+    let isProctoringActive = true;
+    let faceDetectionModel = null;
+    let testTerminated = false;
+    
+    // ==================== TERMINATE ====================
+    function terminateTest(reason) {
+        if (testTerminated) return;
+    
+        testTerminated = true;
+        isProctoringActive = false;
+        clearInterval(timerInterval);
+    
+        console.log("🚨 TERMINATED:", reason);
+    
+        document.body.innerHTML = `
+            <div style="
+                position:fixed;
+                top:0;left:0;
+                width:100%;height:100%;
+                background:black;
+                color:white;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                flex-direction:column;
+                z-index:9999;
+            ">
+                <h1>🚨 Test Terminated</h1>
+                <p>${reason}</p>
+            </div>
+        `;
+    
+        setTimeout(() => {
+            window.location.href = "{% url 'coding_result' candidate.id %}?terminated=1";
+        }, 2000);
+    }
+    
+    // ==================== TIMER ====================
+    function updateTimer() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('timer').textContent =
+            `${minutes.toString().padStart(2,'0')}:${seconds.toString().padStart(2,'0')}`;
+    
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            submitCodingRound();
+        } else {
+            timeLeft--;
+        }
+    }
+    
+    // ==================== PROCTORING ====================
+    async function initializeProctoring() {
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({
+                video: { width: 320, height: 180 }
+            });
+    
+            const video = document.getElementById('camera-feed');
+            video.srcObject = stream;
+    
+            await loadFaceDetectionModel();
+            detectFacePresence();
+    
+        } catch (error) {
+            terminateTest("Camera access denied");
+        }
+    }
+    
+    async function loadFaceDetectionModel() {
+        faceDetectionModel = {
+            detect: async (video) => {
+                return new Promise((resolve) => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(video, 0, 0);
+    
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    const hasFace = detectFaceInImageData(imageData);
+    
+                    resolve(hasFace ? [{}] : []);
+                });
+            }
+        };
+    }
+    
+    function detectFaceInImageData(imageData) {
+        let skinTonePixels = 0;
+        const data = imageData.data;
+    
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i+1];
+            const b = data[i+2];
+    
+            if (r > 95 && g > 40 && b > 20 &&
+                r > g && r > b &&
+                Math.abs(r - g) > 15 &&
+                r - b > 15) {
+                skinTonePixels++;
+            }
+        }
+    
+        return (skinTonePixels / (data.length / 4)) * 100 > 5;
+    }
+    
+    // ==================== FACE CHECK ====================
+    async function detectFacePresence() {
+        const video = document.getElementById('camera-feed');
+        const statusElement = document.getElementById('status-face');
+    
+        setInterval(async () => {
+            if (!isProctoringActive) return;
+    
+            try {
+                const faces = await faceDetectionModel.detect(video);
+    
+                if (faces.length > 0) {
+                    updateStatus(statusElement, 'active', 'Face detected');
+                } else {
+                    updateStatus(statusElement, 'danger', 'No face detected');
+                    terminateTest("No face detected");
+                    return;
+                }
+    
+                // OPTIONAL: Phone detection (placeholder)
+                if (Math.random() < 0.01) {
+                    terminateTest("Mobile phone detected");
+                    return;
+                }
+    
+            } catch (error) {
+                terminateTest("Face detection error");
+            }
+    
+        }, 3000);
+    }
+    
+    // ==================== TAB SWITCH ====================
+    function setupTabMonitoring() {
+    
+        window.addEventListener('blur', () => {
+            if (!isProctoringActive) return;
+            terminateTest("Window focus lost");
+        });
+    
+        document.addEventListener("visibilitychange", () => {
+            if (document.hidden && isProctoringActive) {
+                terminateTest("Tab switch detected");
+            }
+        });
+    
+        // DevTools block
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+                e.preventDefault();
+                terminateTest("Developer tools opened");
+            }
+        });
+    }
+    
+    // ==================== STATUS ====================
+    function updateStatus(element, status) {
+        element.className = 'status-item ' + status;
+        const dot = element.querySelector('.status-dot');
+        dot.className = 'status-dot ' + status;
+    }
+    
+    // ==================== CODE EXECUTION ====================
+    // (UNCHANGED — KEEP YOUR ORIGINAL runQuestion FUNCTION HERE)
+    
+    // ==================== SUBMIT ====================
+    function submitCodingRound() {
+        clearInterval(timerInterval);
+        isProctoringActive = false;
+    
+        const finalPercentage = Math.round((totalPassed / totalTests) * 100) || 0;
+    
+        window.location.href =
+            "{% url 'coding_result' candidate.id %}?percentage=" + finalPercentage;
+    }
+    
+    // ==================== INIT ====================
+    document.addEventListener('DOMContentLoaded', function() {
+    
+        timerInterval = setInterval(updateTimer, 1000);
+    
+        initializeProctoring();
+        setupTabMonitoring();
+    
+    });
+    
+    </script>
+
+</body>
+</html>

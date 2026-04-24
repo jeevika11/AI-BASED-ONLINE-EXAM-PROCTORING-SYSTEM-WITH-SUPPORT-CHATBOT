@@ -1,0 +1,1224 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Aptitude Test | Proctored Assessment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3a0ca3;
+            --accent: #4cc9f0;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --radius: 16px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+        }
+
+        /* Test Container */
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .test-header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            padding: 25px 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .test-info h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .candidate-details {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #475569;
+            font-size: 0.95rem;
+        }
+
+        .detail-item i {
+            color: var(--primary);
+        }
+
+        /* Timer and Controls */
+        .test-controls {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .timer-container {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px 25px;
+            border-radius: 12px;
+            min-width: 180px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .timer-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+
+        .timer-display {
+            font-size: 2.2rem;
+            font-weight: 700;
+            font-family: 'Montserrat', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .timer-critical {
+            color: #ff6b6b;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .proctor-status {
+            background: white;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border: 2px solid var(--warning);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--dark);
+            box-shadow: 0 3px 10px rgba(245, 158, 11, 0.1);
+        }
+
+        .proctor-status i {
+            color: var(--warning);
+        }
+
+        /* Warning Modal */
+        .warning-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .warning-modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .warning-content {
+            background: white;
+            border-radius: var(--radius);
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+            animation: scaleIn 0.3s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .warning-icon {
+            font-size: 4rem;
+            color: var(--danger);
+            margin-bottom: 20px;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .warning-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+
+        .warning-message {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .warning-count {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--danger);
+            margin: 20px 0;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Instructions */
+        .instructions-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius);
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            border-left: 5px solid var(--warning);
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .instructions-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .instructions-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+
+        .instructions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .instruction-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 10px;
+            transition: var(--transition);
+        }
+
+        .instruction-item:hover {
+            background: white;
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .instruction-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .instruction-text {
+            flex: 1;
+        }
+
+        .instruction-label {
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 5px;
+            font-size: 1rem;
+        }
+
+        .instruction-detail {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        /* Questions Container */
+        .questions-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            margin-bottom: 40px;
+            animation: slideUp 0.8s ease;
+        }
+
+        /* Question Cards */
+        .question-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            border: 2px solid #e2e8f0;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--accent));
+        }
+
+        .question-number {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 1.2rem;
+            box-shadow: 0 3px 10px rgba(67, 97, 238, 0.3);
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+            margin-bottom: 25px;
+            line-height: 1.5;
+            padding-right: 60px;
+        }
+
+        .options-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 15px;
+        }
+
+        .option-label {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 18px 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: var(--transition);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-label:hover {
+            background: white;
+            border-color: #cbd5e1;
+            transform: translateX(5px);
+        }
+
+        .option-label.selected {
+            background: rgba(67, 97, 238, 0.1);
+            border-color: var(--primary);
+            box-shadow: 0 5px 15px rgba(67, 97, 238, 0.1);
+        }
+
+        .option-label.selected::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: var(--primary);
+        }
+
+        .option-radio {
+            display: none;
+        }
+
+        .option-circle {
+            width: 24px;
+            height: 24px;
+            border: 2px solid #cbd5e1;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .option-label.selected .option-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .option-label.selected .option-circle::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .option-text {
+            color: #475569;
+            font-size: 1rem;
+            flex: 1;
+        }
+
+        .option-label:hover .option-text {
+            color: var(--dark);
+        }
+
+        /* Progress Bar */
+        .progress-container {
+            background: white;
+            border-radius: var(--radius);
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .progress-label {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .progress-count {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        /* Submit Button */
+        .submit-section {
+            position: sticky;
+            bottom: 20px;
+            z-index: 100;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, var(--success), #059669);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-2px);
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            transition: transform 0.6s;
+        }
+
+        .submit-btn:hover::after {
+            transform: rotate(30deg) translate(20%, 20%);
+        }
+
+        .submit-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Full Screen Warning */
+        .fullscreen-warning {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 10px;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            z-index: 999;
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
+            animation: slideInRight 0.3s ease;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .fullscreen-warning.active {
+            display: flex;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .test-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .test-controls {
+                justify-content: center;
+                width: 100%;
+            }
+            
+            .candidate-details {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .test-container {
+                padding: 15px;
+            }
+            
+            .question-text {
+                padding-right: 40px;
+            }
+            
+            .question-number {
+                width: 35px;
+                height: 35px;
+                font-size: 1rem;
+            }
+            
+            .options-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .timer-container {
+                min-width: 150px;
+                padding: 15px 20px;
+            }
+            
+            .timer-display {
+                font-size: 1.8rem;
+            }
+            
+            .warning-content {
+                padding: 30px 20px;
+            }
+            
+            .warning-title {
+                font-size: 1.5rem;
+            }
+            
+            .warning-count {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .test-info h1 {
+                font-size: 1.5rem;
+            }
+            
+            .detail-item {
+                font-size: 0.85rem;
+            }
+            
+            .instruction-item {
+                padding: 12px;
+            }
+            
+            .question-card {
+                padding: 20px 15px;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+            
+            .submit-btn {
+                padding: 16px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Full Screen Warning -->
+    <div class="fullscreen-warning" id="fullscreenWarning">
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>Please do not switch tabs or windows!</span>
+    </div>
+
+    <!-- Warning Modal -->
+    <div class="warning-modal" id="warningModal">
+        <div class="warning-content">
+            <div class="warning-icon">
+                <i class="fas fa-exclamation-circle"></i>
+            </div>
+            <h2 class="warning-title">Warning: Tab Switch Detected</h2>
+            <p class="warning-message">
+                You have switched tabs/windows. This is a proctored test and tab switching is prohibited.
+                <br><br>
+                <strong>Remaining warnings:</strong>
+            </p>
+            <div class="warning-count" id="warningCount">2</div>
+            <p class="warning-message" id="warningMessage">
+                Next violation will auto-submit your test.
+            </p>
+            <button class="submit-btn" onclick="closeWarning()" style="margin-top: 20px;">
+                <i class="fas fa-check-circle"></i>
+                I Understand, Continue Test
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="test-container">
+        <!-- Header -->
+        <div class="test-header">
+            <div class="test-info">
+                <h1>
+                    <i class="fas fa-brain"></i>
+                    Aptitude Test
+                </h1>
+                <div class="candidate-details">
+                    <div class="detail-item">
+                        <i class="fas fa-user"></i>
+                        <span><strong>Candidate:</strong> {{ candidate.name }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span><strong>Job Role:</strong> {{ candidate.job.title }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span><strong>Questions:</strong> {{ questions|length }}</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test-controls">
+                <div class="proctor-status">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Proctoring Active</span>
+                </div>
+                <div class="timer-container">
+                    <div class="timer-label">Time Remaining</div>
+                    <div class="timer-display" id="timerDisplay">30:00</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="instructions-container">
+            <div class="instructions-header">
+                <i class="fas fa-info-circle" style="color: var(--warning); font-size: 1.5rem;"></i>
+                <h2>Test Instructions & Rules</h2>
+            </div>
+            <div class="instructions-grid">
+                <div class="instruction-item">
+                    <div class="instruction-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="instruction-text">
+                        <div class="instruction-label">Time Limit</div>
+                        <div class="instruction-detail">30 minutes total • Auto-submit when time ends</div>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">
+                        <i class="fas fa-ban"></i>
+                    </div>
+                    <div class="instruction-text">
+                        <div class="instruction-label">No Tab Switching</div>
+                        <div class="instruction-detail">2 warnings allowed • Auto-submit on 3rd violation</div>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="instruction-text">
+                        <div class="instruction-label">Answer All Questions</div>
+                        <div class="instruction-detail">Each question has one correct answer</div>
+                    </div>
+                </div>
+                <div class="instruction-item">
+                    <div class="instruction-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="instruction-text">
+                        <div class="instruction-label">Proctoring Active</div>
+                        <div class="instruction-detail">Browser monitoring enabled • No external help</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-container">
+            <div class="progress-info">
+                <div class="progress-label">Progress</div>
+                <div class="progress-count">
+                    <span id="answeredCount">0</span>/{{ questions|length }}
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <!-- Questions Form -->
+        <form method="POST" action="{% url 'submit_aptitude' candidate.id %}" id="aptitudeForm">
+            {% csrf_token %}
+            <div class="questions-container">
+                {% for q in questions %}
+                <div class="question-card" id="question-{{ forloop.counter0 }}">
+                    <div class="question-number">{{ forloop.counter }}</div>
+                    <div class="question-text">{{ q.question }}</div>
+                    <div class="options-container">
+                        {% for opt in q.options %}
+                        <label class="option-label" for="q{{ forloop.parentloop.counter0 }}_{{ forloop.counter }}">
+                            <input type="radio" 
+                                   class="option-radio" 
+                                   name="q{{ forloop.parentloop.counter0 }}" 
+                                   id="q{{ forloop.parentloop.counter0 }}_{{ forloop.counter }}" 
+                                   value="{{ opt }}"
+                                   required>
+                            <div class="option-circle"></div>
+                            <div class="option-text">{{ opt }}</div>
+                        </label>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="submit-section">
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fas fa-paper-plane"></i>
+                    Submit Aptitude Test
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Proctoring Variables
+        let tabSwitchCount = 0;
+        let maxTabSwitches = 2;
+        let testSubmitted = false;
+        let timeLeft = 30 * 60; // 30 minutes in seconds
+        let timerInterval;
+        
+        // DOM Elements
+        const timerDisplay = document.getElementById('timerDisplay');
+        const warningModal = document.getElementById('warningModal');
+        const warningCount = document.getElementById('warningCount');
+        const warningMessage = document.getElementById('warningMessage');
+        const fullscreenWarning = document.getElementById('fullscreenWarning');
+        const aptitudeForm = document.getElementById('aptitudeForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const progressFill = document.getElementById('progressFill');
+        const answeredCount = document.getElementById('answeredCount');
+        
+        // Initialize Test
+        document.addEventListener('DOMContentLoaded', function() {
+            // Start Timer
+            startTimer();
+            
+            // Setup Proctoring
+            setupProctoring();
+            
+            // Setup Progress Tracking
+            setupProgressTracking();
+            
+            // Setup Form Submission
+            setupFormSubmission();
+            
+            // Full Screen Request (optional)
+            requestFullScreen();
+        });
+        
+        // Timer Functionality
+        function startTimer() {
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                // Update timer color based on remaining time
+                if (timeLeft <= 300) { // 5 minutes left
+                    timerDisplay.classList.add('timer-critical');
+                }
+                
+                // Auto-submit when time is up
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    autoSubmitTest('Time is up! Test auto-submitted.');
+                }
+            }, 1000);
+        }
+        
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Proctoring Functionality
+        function setupProctoring() {
+            // Track visibility changes
+            document.addEventListener('visibilitychange', handleVisibilityChange);
+            
+            // Track blur/focus events
+            window.addEventListener('blur', handleWindowBlur);
+            window.addEventListener('focus', handleWindowFocus);
+            
+            // Prevent context menu (optional)
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showWarning('Right-click is disabled during the test.');
+            });
+            
+            // Prevent keyboard shortcuts (Ctrl+C, Ctrl+V, etc.)
+            document.addEventListener('keydown', function(e) {
+                // Prevent F5 (refresh)
+                if (e.key === 'F5') {
+                    e.preventDefault();
+                    showWarning('Page refresh is not allowed during the test.');
+                }
+                
+                // Prevent Ctrl+R, Ctrl+Shift+R
+                if ((e.ctrlKey && e.key === 'r') || (e.ctrlKey && e.key === 'R')) {
+                    e.preventDefault();
+                    showWarning('Page refresh is not allowed during the test.');
+                }
+                
+                // Prevent Ctrl+C, Ctrl+V, Ctrl+X
+                if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'x')) {
+                    e.preventDefault();
+                    showWarning('Copy/paste is disabled during the test.');
+                }
+                
+                // Prevent Print Screen
+                if (e.key === 'PrintScreen') {
+                    e.preventDefault();
+                    showWarning('Screenshots are not allowed during the test.');
+                }
+            });
+        }
+        
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                // Tab switched or window minimized
+                tabSwitchCount++;
+                
+                if (tabSwitchCount <= maxTabSwitches) {
+                    showTabSwitchWarning();
+                } else {
+                    autoSubmitTest('Multiple tab switches detected. Test auto-submitted.');
+                }
+            }
+        }
+        
+        function handleWindowBlur() {
+            // Show warning when window loses focus
+            fullscreenWarning.classList.add('active');
+        }
+        
+        function handleWindowFocus() {
+            // Hide warning when window gains focus
+            fullscreenWarning.classList.remove('active');
+        }
+        
+        function showTabSwitchWarning() {
+            warningCount.textContent = maxTabSwitches + 1 - tabSwitchCount;
+            
+            if (tabSwitchCount < maxTabSwitches) {
+                warningMessage.textContent = `Next violation will auto-submit your test.`;
+            } else {
+                warningMessage.textContent = `This is your final warning!`;
+            }
+            
+            warningModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeWarning() {
+            warningModal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        function showWarning(message) {
+            // Create a temporary warning message
+            const warning = document.createElement('div');
+            warning.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: var(--danger);
+                color: white;
+                padding: 15px 25px;
+                border-radius: 10px;
+                z-index: 1000;
+                box-shadow: 0 5px 20px rgba(239, 68, 68, 0.3);
+                animation: slideDown 0.3s ease;
+            `;
+            warning.innerHTML = `<i class="fas fa-exclamation-triangle"></i> ${message}`;
+            document.body.appendChild(warning);
+            
+            setTimeout(() => {
+                warning.style.animation = 'slideDown 0.3s ease reverse';
+                setTimeout(() => warning.remove(), 300);
+            }, 3000);
+        }
+        
+        // Progress Tracking
+        function setupProgressTracking() {
+            const radioButtons = document.querySelectorAll('.option-radio');
+            const totalQuestions = {{ questions|length }};
+            
+            radioButtons.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    updateProgress();
+                });
+            });
+            
+            // Initial progress update
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            const radioButtons = document.querySelectorAll('.option-radio');
+            const checkedCount = Array.from(radioButtons).filter(r => r.checked).length;
+            const totalQuestions = {{ questions|length }};
+            const percentage = (checkedCount / totalQuestions) * 100;
+            
+            answeredCount.textContent = checkedCount;
+            progressFill.style.width = `${percentage}%`;
+            
+            // Update question card styling
+            document.querySelectorAll('.question-card').forEach(card => {
+                const questionId = card.id.split('-')[1];
+                const hasAnswer = document.querySelector(`input[name="q${questionId}"]:checked`);
+                
+                if (hasAnswer) {
+                    card.style.borderColor = 'var(--success)';
+                }
+            });
+        }
+        
+        // Auto Submit Function
+        function autoSubmitTest(reason) {
+            if (testSubmitted) return;
+            
+            testSubmitted = true;
+            clearInterval(timerInterval);
+            
+            // Show final warning
+            const warning = document.createElement('div');
+            warning.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: rgba(0, 0, 0, 0.9);
+                color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                z-index: 2000;
+                font-family: 'Montserrat', sans-serif;
+                text-align: center;
+                padding: 20px;
+            `;
+            warning.innerHTML = `
+                <i class="fas fa-exclamation-triangle" style="font-size: 4rem; color: var(--danger); margin-bottom: 20px;"></i>
+                <h2 style="font-size: 2rem; margin-bottom: 20px;">Test Auto-Submitted</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 30px; max-width: 600px;">${reason}</p>
+                <p style="font-size: 1rem; opacity: 0.8;">Submitting your answers...</p>
+            `;
+            document.body.appendChild(warning);
+            
+            // Disable form inputs
+            document.querySelectorAll('input, button').forEach(el => {
+                el.disabled = true;
+            });
+            
+            // Submit the form after 3 seconds
+            setTimeout(() => {
+                aptitudeForm.submit();
+            }, 3000);
+        }
+        
+        // Form Submission
+        function setupFormSubmission() {
+            aptitudeForm.addEventListener('submit', function(e) {
+                if (testSubmitted) {
+                    e.preventDefault();
+                    return;
+                }
+                
+                // Check if all questions are answered
+                const totalQuestions = {{ questions|length }};
+                const answeredQuestions = document.querySelectorAll('.option-radio:checked').length;
+                
+                if (answeredQuestions < totalQuestions) {
+                    e.preventDefault();
+                    
+                    // Show warning about unanswered questions
+                    if (!confirm(`You have ${totalQuestions - answeredQuestions} unanswered questions. Are you sure you want to submit?`)) {
+                        return;
+                    }
+                }
+                
+                // Show submitting animation
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Submitting...';
+                submitBtn.disabled = true;
+                testSubmitted = true;
+                clearInterval(timerInterval);
+            });
+        }
+        
+        // Full Screen Request
+        function requestFullScreen() {
+            const elem = document.documentElement;
+            
+            // Check if fullscreen is supported
+            if (elem.requestFullscreen) {
+                // Try to enter fullscreen
+                elem.requestFullscreen().catch(err => {
+                    console.log('Fullscreen request failed:', err);
+                });
+            }
+            
+            // Exit fullscreen on ESC
+            document.addEventListener('fullscreenchange', function() {
+                if (!document.fullscreenElement) {
+                    // User exited fullscreen
+                    tabSwitchCount++;
+                    if (tabSwitchCount <= maxTabSwitches) {
+                        showTabSwitchWarning();
+                    } else {
+                        autoSubmitTest('Fullscreen mode exited. Test auto-submitted.');
+                    }
+                    
+                    // Try to re-enter fullscreen
+                    setTimeout(() => {
+                        if (elem.requestFullscreen) {
+                            elem.requestFullscreen();
+                        }
+                    }, 1000);
+                }
+            });
+        }
+        
+        // Prevent leaving the page
+        window.addEventListener('beforeunload', function(e) {
+            if (!testSubmitted) {
+                e.preventDefault();
+                e.returnValue = 'Are you sure you want to leave? Your test progress will be lost.';
+                return e.returnValue;
+            }
+        });
+        
+        // Add visual feedback for selected options
+        document.querySelectorAll('.option-label').forEach(label => {
+            const radio = label.querySelector('.option-radio');
+            
+            label.addEventListener('click', function() {
+                // Remove selected class from all options in this question
+                const questionName = radio.name;
+                document.querySelectorAll(`input[name="${questionName}"]`).forEach(r => {
+                    r.closest('.option-label').classList.remove('selected');
+                });
+                
+                // Add selected class to clicked option
+                label.classList.add('selected');
+            });
+            
+            // Handle keyboard navigation
+            label.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    radio.click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+{% endblock %}

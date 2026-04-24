@@ -1,0 +1,958 @@
+{
+    "intents": [
+      {
+        "tag": "greeting",
+        "patterns": [
+          "Hi",
+          "Hello",
+          "Hey",
+          "Good morning",
+          "Good evening"
+        ],
+        "responses": [
+          "Hello! Welcome to the Interview Support System. How can I assist you today?",
+          "Hi there! Facing any issues with your interview? I’m here to help.",
+          "Hey! Need help with your online interview setup?"
+        ]
+      },
+      {
+        "tag": "internet_issue",
+        "patterns": [
+          "My internet is slow",
+          "Connection problem during interview",
+          "Network issue",
+          "Internet not working",
+          "Call is lagging"
+        ],
+        "responses": [
+          "It seems like a network issue. Try switching to a stable Wi-Fi or mobile hotspot.",
+          "Please check your internet speed and reconnect to the meeting.",
+          "Close background apps that may be consuming bandwidth."
+        ]
+      },
+      {
+        "tag": "audio_issue",
+        "patterns": [
+          "My mic is not working",
+          "Interviewer can't hear me",
+          "Audio problem",
+          "No sound in interview",
+          "Microphone issue"
+        ],
+        "responses": [
+          "Check if your microphone is properly connected and not muted.",
+          "Ensure the correct microphone is selected in your meeting settings.",
+          "Try restarting your browser or device."
+        ]
+      },
+      {
+        "tag": "video_issue",
+        "patterns": [
+          "Camera not working",
+          "Video not showing",
+          "Webcam issue",
+          "My video is off",
+          "Camera problem"
+        ],
+        "responses": [
+          "Please check if your camera is enabled and not being used by another application.",
+          "Grant camera permissions in your browser settings.",
+          "Try restarting your device or reconnecting to the meeting."
+        ]
+      },
+      {
+        "tag": "login_issue",
+        "patterns": [
+          "Unable to login",
+          "Login failed",
+          "Can't access interview portal",
+          "Forgot password",
+          "Sign in issue"
+        ],
+        "responses": [
+          "Please verify your login credentials and try again.",
+          "Use the 'Forgot Password' option to reset your password.",
+          "Clear browser cache or try a different browser."
+        ]
+      },
+      {
+        "tag": "platform_not_loading",
+        "patterns": [
+          "Interview page not loading",
+          "Website is stuck",
+          "Portal not opening",
+          "Page crashed",
+          "System not responding"
+        ],
+        "responses": [
+          "Try refreshing the page or reopening the link.",
+          "Clear your browser cache and cookies.",
+          "Switch to another browser like Chrome or Edge."
+        ]
+      },
+      {
+        "tag": "screen_sharing_issue",
+        "patterns": [
+          "Unable to share screen",
+          "Screen share not working",
+          "Can't present my screen",
+          "Sharing issue"
+        ],
+        "responses": [
+          "Ensure you have granted screen sharing permissions.",
+          "Check if your browser supports screen sharing.",
+          "Try restarting the meeting or switching browsers."
+        ]
+      },
+      {
+        "tag": "interview_link_issue",
+        "patterns": [
+          "Interview link not working",
+          "Invalid meeting link",
+          "Can't join interview",
+          "Link expired"
+        ],
+        "responses": [
+          "Please check if you are using the correct and latest interview link.",
+          "Contact the recruiter to resend the valid link.",
+          "Ensure the scheduled time matches your login attempt."
+        ]
+      },
+      {
+        "tag": "background_noise",
+        "patterns": [
+          "Too much noise",
+          "Background noise issue",
+          "Audio disturbance",
+          "Noise in interview"
+        ],
+        "responses": [
+          "Try using headphones with a built-in microphone.",
+          "Move to a quieter environment.",
+          "Enable noise cancellation if available."
+        ]
+      },
+      {
+        "tag": "system_requirements",
+        "patterns": [
+          "What are system requirements",
+          "Interview system requirements",
+          "Minimum requirements",
+          "Device compatibility"
+        ],
+        "responses": [
+          "Ensure you have a stable internet connection, working camera, and microphone.",
+          "Use updated browsers like Chrome, Firefox, or Edge.",
+          "Make sure your device meets basic performance requirements."
+        ]
+      },
+      {
+        "tag": "reschedule_request",
+        "patterns": [
+          "Can I reschedule interview",
+          "Missed my interview",
+          "Need to change interview time",
+          "Reschedule request"
+        ],
+        "responses": [
+          "Please contact your recruiter or HR to request a reschedule.",
+          "Mention your reason clearly while requesting a new slot.",
+          "Rescheduling depends on company policy."
+        ]
+      },
+      {
+        "tag": "technical_support_contact",
+        "patterns": [
+          "How to contact support",
+          "Need technical help",
+          "Support team contact",
+          "Help desk"
+        ],
+        "responses": [
+          "You can contact the technical support team via email or helpline provided in your interview email.",
+          "Check the interview portal for support contact details.",
+          "Reach out immediately if your issue persists."
+        ]
+      },
+      {
+        "tag": "goodbye",
+        "patterns": [
+          "Bye",
+          "Thank you",
+          "Thanks",
+          "See you",
+          "Exit"
+        ],
+        "responses": [
+          "You're welcome! Best of luck with your interview!",
+          "Goodbye! Feel free to reach out if you need more help.",
+          "All the best for your interview!"
+        ]
+      },
+  
+          {
+            "tag": "otp_issue",
+            "patterns": [
+              "OTP not received",
+              "Didn't get verification code",
+              "OTP problem",
+              "Code not coming",
+              "Verification code missing"
+            ],
+            "responses": [
+              "Please wait a minute and try requesting the OTP again.",
+              "Check your spam or blocked messages folder.",
+              "Ensure your registered mobile number/email is correct."
+            ]
+          },
+          {
+            "tag": "browser_issue",
+            "patterns": [
+              "Browser not supported",
+              "Which browser to use",
+              "Interview not working in my browser",
+              "Best browser for interview",
+              "Compatibility issue"
+            ],
+            "responses": [
+              "Please use updated browsers like Chrome, Edge, or Firefox.",
+              "Avoid using outdated or unsupported browsers.",
+              "Try switching to another browser and rejoin the interview."
+            ]
+          },
+          {
+            "tag": "vpn_issue",
+            "patterns": [
+              "Using VPN problem",
+              "VPN blocking interview",
+              "Interview not working with VPN",
+              "Should I disable VPN",
+              "VPN connection issue"
+            ],
+            "responses": [
+              "Please disable VPN and try again.",
+              "VPN may block access to interview platforms.",
+              "Use a direct internet connection for better performance."
+            ]
+          },
+          {
+            "tag": "firewall_issue",
+            "patterns": [
+              "Firewall blocking interview",
+              "Security settings issue",
+              "Access denied",
+              "Firewall problem",
+              "Network restriction"
+            ],
+            "responses": [
+              "Temporarily disable firewall or security restrictions.",
+              "Allow permissions for the interview platform.",
+              "Contact your IT admin if restrictions persist."
+            ]
+          },
+          {
+            "tag": "app_crash",
+            "patterns": [
+              "App crashed",
+              "Interview app closed",
+              "System crash",
+              "Application stopped",
+              "Meeting app error"
+            ],
+            "responses": [
+              "Restart the application and rejoin the interview.",
+              "Clear cache or reinstall the app if needed.",
+              "Ensure your system meets requirements."
+            ]
+          },
+          {
+            "tag": "lag_issue",
+            "patterns": [
+              "Video lagging",
+              "Call delay",
+              "Interview freezing",
+              "Slow video",
+              "Lag during interview"
+            ],
+            "responses": [
+              "Close unnecessary background applications.",
+              "Switch to a better internet connection.",
+              "Reduce video quality if possible."
+            ]
+          },
+          {
+            "tag": "echo_issue",
+            "patterns": [
+              "Echo in interview",
+              "Hearing my own voice",
+              "Audio echo problem",
+              "Double voice",
+              "Sound repeating"
+            ],
+            "responses": [
+              "Use headphones to avoid echo.",
+              "Mute one device if using multiple devices.",
+              "Check audio settings in the meeting app."
+            ]
+          },
+          {
+            "tag": "permission_issue",
+            "patterns": [
+              "Camera permission denied",
+              "Mic permission blocked",
+              "Permission issue",
+              "Allow camera access",
+              "Allow microphone"
+            ],
+            "responses": [
+              "Allow camera and microphone permissions in browser settings.",
+              "Reload the page after granting permissions.",
+              "Check system privacy settings."
+            ]
+          },
+          {
+            "tag": "device_not_supported",
+            "patterns": [
+              "Mobile not supported",
+              "Device incompatible",
+              "Tablet issue",
+              "Phone interview problem",
+              "Unsupported device"
+            ],
+            "responses": [
+              "Use a laptop or desktop for better experience.",
+              "Mobile devices may have limited support.",
+              "Ensure your device meets platform requirements."
+            ]
+          },
+          {
+            "tag": "battery_issue",
+            "patterns": [
+              "Battery low",
+              "Laptop about to die",
+              "Power issue",
+              "Device shutting down",
+              "Low battery warning"
+            ],
+            "responses": [
+              "Connect your charger immediately.",
+              "Keep backup power ready before interview.",
+              "Ensure your device is fully charged beforehand."
+            ]
+          }
+      ,
+     
+      
+          {
+            "tag": "interviewer_not_joined",
+            "patterns": ["Interviewer not joined", "No interviewer yet", "Waiting for interviewer"],
+            "responses": ["Please wait for 5–10 minutes and then contact HR if needed."]
+          },
+          {
+            "tag": "disconnect_issue",
+            "patterns": ["Disconnected during interview", "Call dropped"],
+            "responses": ["Rejoin immediately using the same link."]
+          },
+          {
+            "tag": "multiple_devices_issue",
+            "patterns": ["Using multiple devices", "Two devices problem"],
+            "responses": ["Use only one device to avoid echo or confusion."]
+          },
+          {
+            "tag": "headphone_issue",
+            "patterns": ["Headphones not working"],
+            "responses": ["Reconnect or select correct audio device."]
+          },
+          {
+            "tag": "keyboard_issue",
+            "patterns": ["Keyboard not working"],
+            "responses": ["Reconnect keyboard or restart system."]
+          },
+          {
+            "tag": "mouse_issue",
+            "patterns": ["Mouse not working"],
+            "responses": ["Check USB or Bluetooth connection."]
+          },
+          {
+            "tag": "screen_freeze",
+            "patterns": ["Screen frozen", "System freeze"],
+            "responses": ["Restart browser or rejoin meeting."]
+          },
+          {
+            "tag": "coding_platform_issue",
+            "patterns": ["Coding test not working"],
+            "responses": ["Refresh the coding platform."]
+          },
+          {
+            "tag": "compiler_issue",
+            "patterns": ["Compiler error"],
+            "responses": ["Check syntax or refresh platform."]
+          },
+          {
+            "tag": "whiteboard_issue",
+            "patterns": ["Whiteboard not working"],
+            "responses": ["Reload the session."]
+          },
+      
+          {
+            "tag": "resume_upload_issue",
+            "patterns": ["Resume upload failed"],
+            "responses": ["Check file size and format."]
+          },
+          {
+            "tag": "file_format_issue",
+            "patterns": ["File format not accepted"],
+            "responses": ["Upload PDF format."]
+          },
+          {
+            "tag": "email_not_received",
+            "patterns": ["Interview mail not received"],
+            "responses": ["Check spam folder."]
+          },
+          {
+            "tag": "calendar_issue",
+            "patterns": ["Calendar not updated"],
+            "responses": ["Verify meeting link again."]
+          },
+          {
+            "tag": "timezone_issue",
+            "patterns": ["Wrong time zone"],
+            "responses": ["Check timezone mentioned in email."]
+          },
+          {
+            "tag": "reschedule_followup",
+            "patterns": ["Follow up reschedule"],
+            "responses": ["Contact HR politely."]
+          },
+          {
+            "tag": "interview_duration",
+            "patterns": ["How long interview"],
+            "responses": ["Usually 30–60 minutes."]
+          },
+          {
+            "tag": "interview_rounds",
+            "patterns": ["Number of rounds"],
+            "responses": ["Depends on company."]
+          },
+          {
+            "tag": "interview_format",
+            "patterns": ["Interview format"],
+            "responses": ["Technical + HR rounds."]
+          },
+          {
+            "tag": "camera_required",
+            "patterns": ["Is camera mandatory"],
+            "responses": ["Yes, mostly required."]
+          },
+      
+          {
+            "tag": "dress_code",
+            "patterns": ["Dress code"],
+            "responses": ["Formal attire recommended."]
+          },
+          {
+            "tag": "environment_setup",
+            "patterns": ["Interview environment"],
+            "responses": ["Quiet and well-lit place."]
+          },
+          {
+            "tag": "documents_required",
+            "patterns": ["Documents needed"],
+            "responses": ["Keep resume and ID ready."]
+          },
+          {
+            "tag": "background_check",
+            "patterns": ["Background check"],
+            "responses": ["Ensure clean background."]
+          },
+          {
+            "tag": "lighting_issue",
+            "patterns": ["Lighting problem"],
+            "responses": ["Sit in a well-lit area."]
+          },
+          {
+            "tag": "noise_issue",
+            "patterns": ["Noise disturbance"],
+            "responses": ["Move to quiet location."]
+          },
+          {
+            "tag": "follow_up_email",
+            "patterns": ["Send follow up"],
+            "responses": ["Send polite follow-up email."]
+          },
+          {
+            "tag": "result_wait",
+            "patterns": ["When result"],
+            "responses": ["Usually within few days."]
+          },
+          {
+            "tag": "feedback_request",
+            "patterns": ["Need feedback"],
+            "responses": ["Request HR politely."]
+          },
+          {
+            "tag": "offer_letter_status",
+            "patterns": ["Offer letter"],
+            "responses": ["Will be shared via email."]
+          },
+      
+          {
+            "tag": "rejection_help",
+            "patterns": ["Got rejected"],
+            "responses": ["Keep improving and try again."]
+          },
+          {
+            "tag": "confidence_tip",
+            "patterns": ["Feeling nervous"],
+            "responses": ["Stay calm and confident."]
+          },
+          {
+            "tag": "last_minute_tips",
+            "patterns": ["Last minute tips"],
+            "responses": ["Check setup and relax."]
+          },
+          {
+            "tag": "practice_interview",
+            "patterns": ["Mock interview"],
+            "responses": ["Use practice platforms."]
+          },
+          {
+            "tag": "body_language",
+            "patterns": ["Body language tips"],
+            "responses": ["Maintain eye contact."]
+          },
+          {
+            "tag": "communication_skill",
+            "patterns": ["Communication tips"],
+            "responses": ["Speak clearly."]
+          },
+          {
+            "tag": "technical_preparation",
+            "patterns": ["Technical preparation"],
+            "responses": ["Revise basics."]
+          },
+          {
+            "tag": "hr_questions",
+            "patterns": ["HR questions"],
+            "responses": ["Prepare common HR answers."]
+          },
+          {
+            "tag": "strengths_question",
+            "patterns": ["Tell strengths"],
+            "responses": ["Highlight key skills."]
+          },
+          {
+            "tag": "weakness_question",
+            "patterns": ["Tell weakness"],
+            "responses": ["Be honest and improving."]
+          },
+      
+          {
+            "tag": "why_company",
+            "patterns": ["Why company"],
+            "responses": ["Research company well."]
+          },
+          {
+            "tag": "salary_expectation",
+            "patterns": ["Salary expectation"],
+            "responses": ["Answer based on market."]
+          },
+          {
+            "tag": "project_explanation",
+            "patterns": ["Explain project"],
+            "responses": ["Be clear and structured."]
+          },
+          {
+            "tag": "technical_question",
+            "patterns": ["Technical question"],
+            "responses": ["Explain logically."]
+          },
+          {
+            "tag": "coding_question",
+            "patterns": ["Coding question"],
+            "responses": ["Practice coding."]
+          },
+          {
+            "tag": "time_management",
+            "patterns": ["Manage time"],
+            "responses": ["Plan answers wisely."]
+          },
+          {
+            "tag": "stress_management",
+            "patterns": ["Interview stress"],
+            "responses": ["Stay relaxed."]
+          },
+          {
+            "tag": "panel_interview",
+            "patterns": ["Panel interview"],
+            "responses": ["Address all members."]
+          },
+          {
+            "tag": "online_etiquette",
+            "patterns": ["Online etiquette"],
+            "responses": ["Be professional."]
+          },
+          {
+            "tag": "eye_contact",
+            "patterns": ["Eye contact"],
+            "responses": ["Look at camera."]
+          },
+      
+          {
+            "tag": "voice_clarity",
+            "patterns": ["Speak clearly"],
+            "responses": ["Talk slowly."]
+          },
+          {
+            "tag": "interruptions",
+            "patterns": ["Interruptions"],
+            "responses": ["Mute distractions."]
+          },
+          {
+            "tag": "note_taking",
+            "patterns": ["Take notes"],
+            "responses": ["Keep notes ready."]
+          },
+          {
+            "tag": "water_break",
+            "patterns": ["Water break"],
+            "responses": ["Keep water nearby."]
+          },
+          {
+            "tag": "backup_plan",
+            "patterns": ["Backup plan"],
+            "responses": ["Keep hotspot ready."]
+          },
+          {
+            "tag": "device_backup",
+            "patterns": ["Backup device"],
+            "responses": ["Keep mobile ready."]
+          },
+          {
+            "tag": "login_early",
+            "patterns": ["Join early"],
+            "responses": ["Join 10 mins early."]
+          },
+          {
+            "tag": "test_run",
+            "patterns": ["Test interview"],
+            "responses": ["Test before joining."]
+          },
+          {
+            "tag": "browser_update",
+            "patterns": ["Update browser"],
+            "responses": ["Use latest version."]
+          },
+          {
+            "tag": "clear_cache",
+            "patterns": ["Clear cache"],
+            "responses": ["Clear browser cache."]
+          },
+      
+      
+      
+          {
+            "tag": "recording_issue",
+            "patterns": [
+              "Interview recording not working",
+              "Session not recorded",
+              "Recording failed",
+              "No recording available",
+              "Recording issue"
+            ],
+            "responses": [
+              "Recording depends on platform settings.",
+              "Please contact support if recording is required.",
+              "Ensure permissions are enabled."
+            ]
+          },
+          {
+            "tag": "meeting_id_issue",
+            "patterns": [
+              "Meeting ID not working",
+              "Invalid meeting ID",
+              "Wrong meeting code",
+              "Can't join with ID",
+              "Meeting ID error"
+            ],
+            "responses": [
+              "Please verify the meeting ID.",
+              "Check the invitation email for correct details.",
+              "Contact HR if the issue persists."
+            ]
+          },
+          {
+            "tag": "waiting_room_issue",
+            "patterns": [
+              "Stuck in waiting room",
+              "Waiting room not moving",
+              "Not admitted to meeting",
+              "Waiting for approval",
+              "Waiting room delay"
+            ],
+            "responses": [
+              "Please wait as the host needs to admit you.",
+              "Inform HR if waiting time exceeds 10 minutes.",
+              "Ensure you joined using the correct link."
+            ]
+          },
+          {
+            "tag": "profile_update_issue",
+            "patterns": [
+              "Can't update profile",
+              "Profile edit problem",
+              "Update details issue",
+              "Profile save error",
+              "Profile not updating"
+            ],
+            "responses": [
+              "Try refreshing the page and updating again.",
+              "Check all required fields are filled.",
+              "Clear cache and retry."
+            ]
+          },
+          {
+            "tag": "name_display_issue",
+            "patterns": [
+              "Wrong name showing",
+              "Display name incorrect",
+              "Name not updated",
+              "Profile name issue",
+              "Change name problem"
+            ],
+            "responses": [
+              "Update your name in profile settings.",
+              "Rejoin meeting after updating your name.",
+              "Ensure changes are saved properly."
+            ]
+          },
+          {
+            "tag": "notification_issue",
+            "patterns": [
+              "Not getting notifications",
+              "No interview alerts",
+              "Reminder not received",
+              "Notification problem",
+              "Missed alert"
+            ],
+            "responses": [
+              "Enable notifications in settings.",
+              "Check email and SMS alerts.",
+              "Ensure your contact details are correct."
+            ]
+          },
+          {
+            "tag": "system_update_issue",
+            "patterns": [
+              "System update required",
+              "Software outdated",
+              "Update error",
+              "Old version issue",
+              "Update problem"
+            ],
+            "responses": [
+              "Update your browser or app to latest version.",
+              "Restart system after updating.",
+              "Ensure compatibility with platform."
+            ]
+          },
+          {
+            "tag": "network_switch",
+            "patterns": [
+              "Switch network",
+              "Change internet connection",
+              "Use mobile hotspot",
+              "Network switching issue",
+              "Internet change"
+            ],
+            "responses": [
+              "Switch to a more stable network.",
+              "Mobile hotspot can be used as backup.",
+              "Reconnect after switching network."
+            ]
+          },
+          {
+            "tag": "session_timeout",
+            "patterns": [
+              "Session expired",
+              "Logged out automatically",
+              "Timeout issue",
+              "Session ended",
+              "Auto logout"
+            ],
+            "responses": [
+              "Login again and rejoin interview.",
+              "Avoid inactivity during session.",
+              "Check session timeout settings."
+            ]
+          },
+          {
+            "tag": "chat_issue",
+            "patterns": [
+              "Chat not working",
+              "Message not sending",
+              "Can't chat in interview",
+              "Chat box issue",
+              "Text message problem"
+            ],
+            "responses": [
+              "Refresh the chat window.",
+              "Check internet connection.",
+              "Try rejoining the meeting."
+            ]
+          }
+      ,
+      
+          {
+            "tag": "rejoin_issue",
+            "patterns": [
+              "Can't rejoin interview",
+              "Rejoin failed",
+              "Unable to reconnect",
+              "Join again issue",
+              "Re-entry problem"
+            ],
+            "responses": [
+              "Use the same interview link to rejoin.",
+              "Restart your browser before reconnecting.",
+              "Check your internet connection."
+            ]
+          },
+          {
+            "tag": "audio_delay",
+            "patterns": [
+              "Audio delay",
+              "Voice coming late",
+              "Sound lagging",
+              "Delayed audio",
+              "Voice delay issue"
+            ],
+            "responses": [
+              "Check your internet speed.",
+              "Close background apps.",
+              "Reconnect to improve audio sync."
+            ]
+          },
+          {
+            "tag": "video_blur",
+            "patterns": [
+              "Video blurry",
+              "Camera unclear",
+              "Low quality video",
+              "Blurred screen",
+              "Poor video quality"
+            ],
+            "responses": [
+              "Clean your camera lens.",
+              "Improve lighting conditions.",
+              "Check your internet connection."
+            ]
+          },
+          {
+            "tag": "screen_permission_mac",
+            "patterns": [
+              "Screen share not working on Mac",
+              "Mac permission issue",
+              "Screen recording permission Mac",
+              "Can't share screen Mac",
+              "Mac screen issue"
+            ],
+            "responses": [
+              "Enable screen recording permissions in Mac settings.",
+              "Restart browser after granting permission.",
+              "Check system preferences."
+            ]
+          },
+          {
+            "tag": "screen_permission_windows",
+            "patterns": [
+              "Screen share not working on Windows",
+              "Windows permission issue",
+              "Can't share screen Windows",
+              "Display issue Windows",
+              "Windows screen problem"
+            ],
+            "responses": [
+              "Allow screen sharing in system settings.",
+              "Run browser as administrator if needed.",
+              "Restart your system."
+            ]
+          },
+          {
+            "tag": "background_app_issue",
+            "patterns": [
+              "Apps running in background",
+              "Too many apps open",
+              "System slow due to apps",
+              "Background usage issue",
+              "Apps consuming memory"
+            ],
+            "responses": [
+              "Close unnecessary applications.",
+              "Free up system memory.",
+              "Restart your device for better performance."
+            ]
+          },
+          {
+            "tag": "interview_overlap",
+            "patterns": [
+              "Two interviews at same time",
+              "Schedule clash",
+              "Interview overlap",
+              "Timing conflict",
+              "Multiple interviews"
+            ],
+            "responses": [
+              "Inform HR immediately.",
+              "Request rescheduling politely.",
+              "Prioritize based on importance."
+            ]
+          },
+          {
+            "tag": "typing_issue",
+            "patterns": [
+              "Can't type during coding test",
+              "Typing lag",
+              "Keyboard delay",
+              "Input not working",
+              "Typing problem"
+            ],
+            "responses": [
+              "Check keyboard connection.",
+              "Refresh coding platform.",
+              "Restart browser."
+            ]
+          },
+          {
+            "tag": "copy_paste_issue",
+            "patterns": [
+              "Copy paste not working",
+              "Can't paste code",
+              "Clipboard blocked",
+              "Paste disabled",
+              "Copy issue"
+            ],
+            "responses": [
+              "Some platforms restrict copy-paste.",
+              "Type code manually if required.",
+              "Check platform guidelines."
+            ]
+          },
+          {
+            "tag": "submission_issue",
+            "patterns": [
+              "Unable to submit test",
+              "Submission failed",
+              "Can't submit answers",
+              "Submit button not working",
+              "Test submission issue"
+            ],
+            "responses": [
+              "Check internet connection before submitting.",
+              "Refresh and try again.",
+              "Contact support if submission fails."
+            ]
+          }
+        ]
+      }
+  

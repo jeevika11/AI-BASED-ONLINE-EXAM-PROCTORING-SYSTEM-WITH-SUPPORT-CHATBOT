@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Online Compiler</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f2f2f2;
+            padding: 20px;
+        }
+        textarea {
+            width: 100%;
+            font-family: monospace;
+            font-size: 14px;
+        }
+        #code {
+            height: 260px;
+        }
+        #output {
+            height: 120px;
+            background: #000;
+            color: #00ff00;
+        }
+        button {
+            padding: 10px 25px;
+            font-size: 16px;
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<h2>💻 Online Python Compiler</h2>
+
+<h4>Code</h4>
+<textarea id="code">
+s = input()
+print(s[::-1])
+</textarea>
+
+<h4>Input (stdin)</h4>
+<textarea id="input">hello</textarea>
+
+<br><br>
+<button onclick="runCode()">▶ Run</button>
+
+<h4>Output</h4>
+<textarea id="output" readonly></textarea>
+
+<script>
+function runCode() {
+    document.getElementById("output").value = "Running...";
+
+    fetch("/run-compiler/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body:
+            "code=" + encodeURIComponent(document.getElementById("code").value) +
+            "&input=" + encodeURIComponent(document.getElementById("input").value)
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("output").value =
+            data.output || data.error || "No output";
+    })
+    .catch(err => {
+        document.getElementById("output").value = "Error connecting to compiler";
+    });
+}
+</script>
+
+</body>
+</html>

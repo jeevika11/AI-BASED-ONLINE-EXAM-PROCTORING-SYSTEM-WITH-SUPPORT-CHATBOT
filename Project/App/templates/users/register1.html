@@ -1,0 +1,194 @@
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Registration Form</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #E3F2FD, #BBDEFB, #B3E5FC, #E1F5FE);
+      background-size: 400% 400%;
+      animation: bgShift 12s ease infinite;
+      font-family: 'Open Sans', sans-serif;
+      color: #0D47A1;
+    }
+
+    @keyframes bgShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .form-container {
+      margin-top: 60px;
+      padding: 40px 35px;
+      background-color: rgba(255, 255, 255, 0.95);
+      border-radius: 15px;
+      box-shadow: 0 8px 25px rgba(100, 181, 246, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    .form-container:hover {
+      box-shadow: 0 12px 35px rgba(33, 150, 243, 0.25);
+      transform: translateY(-3px);
+    }
+
+    h2 {
+      background: linear-gradient(to right, #2196F3, #64B5F6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 1.5rem;
+      font-size: 2rem;
+    }
+
+    label {
+      color: #1565C0;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    input {
+      background-color: #f8fbff;
+      border: 1px solid #90CAF9;
+      border-radius: 8px;
+      padding: 10px;
+      width: 100%;
+      transition: all 0.3s ease;
+      color: #0D47A1;
+    }
+
+    input:focus {
+      border-color: #42A5F5;
+      box-shadow: 0 0 8px rgba(66, 165, 245, 0.5);
+      outline: none;
+    }
+
+    .btn-signup {
+      background: linear-gradient(to right, #64B5F6, #2196F3);
+      color: white;
+      font-weight: bold;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+    }
+
+    .btn-signup:hover {
+      background: linear-gradient(to right, #42A5F5, #1E88E5);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(33, 150, 243, 0.4);
+    }
+
+    .alert-danger {
+      background-color: rgba(244, 67, 54, 0.1);
+      color: #B71C1C;
+      border: none;
+      font-size: 14px;
+    }
+
+    .form-note {
+      text-align: center;
+      margin-top: 15px;
+      color: #1A237E;
+    }
+
+    .form-note a {
+      color: #1976D2;
+      font-weight: 600;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .form-note a:hover {
+      color: #0D47A1;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="form-container mx-auto col-md-8 col-lg-6">
+      <h2>Create Your Account</h2>
+
+      {% if form.errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <div id="form_errors">
+            {% for key, value in form.errors.items %}
+              <strong>{{ value }}</strong><br>
+            {% endfor %}
+          </div>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      {% endif %}
+
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>First Name</label>
+              {{ form.first_name }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Last Name</label>
+              {{ form.last_name }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Username</label>
+              {{ form.username }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Email</label>
+              {{ form.email }}
+            </div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Password</label>
+              {{ form.password1 }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Confirm Password</label>
+              {{ form.password2 }}
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-signup">Sign Up</button>
+      </form>
+
+      <p class="form-note mt-3">Already have an account? 
+        <a href="{% url 'login' %}">Log in</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+{% endblock %}

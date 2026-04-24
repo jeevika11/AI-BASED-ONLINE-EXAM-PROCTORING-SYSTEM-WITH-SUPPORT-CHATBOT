@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+<title>Besloor</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+{% load static %}
+<link href="{% static 'layout/styles/layout.css'%}" rel="stylesheet" type="text/css" media="all">
+</head>
+<body id="top">
+
+<div class="bgded overlay" style="background-image:url('/App/static/images/demo/backgrounds/D01.cms');"> 
+  <div class="wrapper row0">
+    <div id="topbar" class="hoc clear"> 
+      <div class="fl_left"> 
+                                  
+        <ul class="nospace">
+          <li><i class="far fa-"></i>Welcome, {{user.first_name.title|default:'Guest'}}</li>
+        </ul>
+      
+      </div>
+      <div class="fl_right"> 
+        
+        <ul class="nospace">
+		  {% if user.is_authenticated %}
+          <li><a href="/"><i class="fas fa-home"></i></a></li>
+          <li><a href="{% url 'logout_view' %}" title="Logout"><i class="fas fa-sign-in-alt"></i></a></li>
+		  {% else %}
+          <li><a href="{% url 'login' %}" title="Sign Up"><i class="fas fa-edit"></i></a></li>
+		  {% endif %}
+        </ul>
+       
+      </div>
+      
+    </div>
+  </div>
+ 
+  <div class="wrapper row1">
+    <header id="header" class="hoc clear"> 
+      
+      <div id="logo" class="fl_left">
+        <h1><a href="/">Depression</a></h1>
+      </div>
+    
+      <nav id="mainav" class="fl_right">
+        <ul class="clear">
+          <li class="active"><a href="/">Home</a></li>
+           <li class="active"><a href="{% url 'emotions' %}">Emotion</a></li>
+		  {% if user.is_authenticated %}
+          <li><a class="drop" href="#">Reports</a>
+            <ul>
+              <li><a href="{% url 'Basic_report' %}">Basic_report</a></li>
+              <li><a href="{% url 'Metircs_report' %}">Metircs Report</a></li>
+            </ul>
+          </li>
+		  <li><a href="{% url 'Model_db' %}">Model_db</a></li>
+
+          <li><a href="{% url 'Model' %}">Model</a></li>
+          <li><a href="{% url 'users-profile' %}">Profile</a></li>
+          <li><a href="{% url 'logout_view' %}">Logout</a></li>
+		  {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+		  {% endif %}
+        </ul>
+      </nav>
+      
+    </header>
+  </div>
+
+  <div id="pageintro" class="hoc clear"> 
+   
+    <article class="center">
+      <h3 class="heading underline">Mental Health Prediction </h3>
+      {% if user.is_authenticated %}
+      <p>Machine learning (ML) is a branch of AI and computer science that focuses on the using data and algorithms to enable AI to imitate the way that humans ....</p>
+      <footer><a class="btn" href="{% url 'Model' %}">Model Prediction</a></footer>
+      {% endif %}
+    </article>
+
+  </div>
+ 
+</div>
+
+<div class="wrapper row3">
+  {% if user.is_authenticated %}
+  <main class="hoc container clear"> 
+    
+    <div class="center btmspace-80">
+      <h6 class="heading underline font-x2">Sleeping Depression </h6>
+    </div>
+    <ul class="nospace group overview btmspace-80">
+      <li class="one_quarter">
+        <article><a href="#"><i class="fas fa-eraser"></i></a>
+          <h6 class="heading"><a href="#">Depression and sleep problems </a></h6>
+          <p>People with insomnia, for example, may have a tenfold higher risk of developing depression than people who get a good night's sleep.&hellip;</p>
+          <footer><a href="https://en.wikipedia.org/wiki/Sleep_deprivation">View Details &raquo;</a></footer>
+        </article>
+      </li>
+      <li class="one_quarter">
+        <article><a href="#"><i class="fas fa-cut"></i></a>
+          <h6 class="heading"><a href="#">What is Machine Learning ?</a></h6>
+          <p>Machine learning (ML) is a field of study in artificial intelligence concerned with the development and study of statistical algorithms that can learn from data and generalize to unseen data and thus perform tasks without explicit instructions.&hellip;</p>
+          <footer><a href="https://en.wikipedia.org/wiki/Sleep_deprivation">View Details &raquo;</a></footer>
+        </article>
+      </li>
+      <li class="one_quarter">
+        <article><a href="#"><i class="fas fa-hand-holding-heart"></i></a>
+          <h6 class="heading"><a href="#">Django</a></h6>
+          <p>Django emphasizes reusability of components, also referred to as DRY (Don't Repeat Yourself), and comes with ready-to-use features like login system, database connection and CRUD operations &hellip;</p>
+          <footer><a href="https://www.djangoproject.com/">View Details &raquo;</a></footer>
+        </article>
+      </li>
+      <li class="one_quarter">
+        <article><a href="#"><i class="fas fa-rocket"></i></a>
+          <h6 class="heading"><a href="#">What is Data science ?</a></h6>
+          <p>Data science is the study of data to extract meaningful insights for business. It is a multidisciplinary approach that combines principles and practices from the fields of mathematics, statistics, artificial intelligence&hellip;</p>
+          <footer><a href="https://en.wikipedia.org/wiki/Sleep_deprivation">View Details &raquo;</a></footer>
+        </article>
+      </li>
+    </ul>
+    <footer class="center"><a class="btn" href="{% url 'Model_db' %}">DB Model Prediction</a></footer>
+   
+    <div class="clear"></div>
+  </main>
+</div>
+
+<div class="wrapper row2">
+  <article class="hoc container clear"> 
+    
+    <div class="center btmspace-80">
+      <h6 class="heading underline font-x2">Techonlogies</h6>
+    </div>
+    <ul class="nospace group figures btmspace-80">
+      <li class="one_third first">
+        <figure><img src="https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=400" alt="">
+          <figcaption><em>01</em> <a href="#">Data set pre-processing</a></figcaption>
+        </figure>
+      </li>
+      <li class="one_third">
+        <figure><img src="https://images.pexels.com/photos/287227/pexels-photo-287227.jpeg?auto=compress&cs=tinysrgb&w=400" alt="">
+          <figcaption><em>02</em> <a href="#">Implemention to Algorithms</a></figcaption>
+        </figure>
+      </li>
+      <li class="one_third">
+        <figure><img src="https://images.pexels.com/photos/724994/pexels-photo-724994.jpeg?auto=compress&cs=tinysrgb&w=400" alt="">
+          <figcaption><em>03</em> <a href="#">Django frame work</a></figcaption>
+        </figure>
+      </li>
+    </ul>
+    <footer class="center"><a class="btn" href="#">Condimentum purus nec</a></footer>
+   
+  </article>
+</div>
+
+<div class="bgded overlay startlt light" style="background-image:url('images/demo/backgrounds/01.png');">
+  
+</div>
+{% endif %}
+
+
+
+
+
+
+
+
+<a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
+
+<script src="{% static 'layout/scripts/jquery.min.js'%}"></script>
+<script src="{% static 'layout/scripts/jquery.backtotop.js'%}"></script>
+<script src="{% static 'layout/scripts/jquery.mobilemenu.js'%}"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Widget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Floating button */
+    #chat-circle {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #34AD54;
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      z-index: 9999;
+      font-size: 28px;
+    }
+
+    /* Chatbox */
+    .chat-box {
+      display: none;
+      flex-direction: column;
+      position: fixed;
+      bottom: 100px;
+      right: 15px;
+      width: 90%;
+      max-width: 360px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      z-index: 9999;
+      overflow: hidden;
+    }
+
+    /* Header */
+    .chat-box-header {
+      background: #34AD54;
+      color: #fff;
+      padding: 12px 15px;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-box-header i {
+      cursor: pointer;
+    }
+
+    /* Body */
+    .chat-box-body {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto;
+      background: #f9f9f9;
+      height: 300px;
+    }
+
+    .chat-msg {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+    }
+
+    .chat-msg.self {
+      flex-direction: row-reverse;
+    }
+
+    .msg-avatar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .cm-msg-text {
+      max-width: 70%;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 0 10px;
+      word-wrap: break-word;
+    }
+
+    .chat-msg.self .cm-msg-text {
+      background: #34AD54;
+      color: #fff;
+    }
+
+    .chat-msg.user .cm-msg-text {
+      background: #e1f6e8;
+      color: #222;
+    }
+
+    /* Footer input */
+    .chat-input {
+      display: flex;
+      align-items: center;
+      border-top: 1px solid #ddd;
+      padding: 8px;
+      background: #fff;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #34AD54;
+      border-radius: 5px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .chat-submit, #voice-btn {
+      background: none;
+      border: none;
+      color: #34AD54;
+      font-size: 22px;
+      margin-left: 8px;
+      cursor: pointer;
+    }
+
+    /* Language & Status */
+    #voice-lang {
+      width: 95%;
+      margin: 8px auto;
+      padding: 6px;
+      border: 1px solid #34AD54;
+      border-radius: 6px;
+    }
+
+    #recognizing-status {
+      display: none;
+      text-align: center;
+      font-size: 12px;
+      color: #34AD54;
+      margin-bottom: 5px;
+    }
+
+    @media (max-width: 600px) {
+      #chat-circle {
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+      }
+      .chat-box {
+        right: 10px;
+        left: 10px;
+        bottom: 90px;
+        width: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+{% if user.is_authenticated %}
+  <div id="chat-circle"><i class="material-icons">chat</i></div>
+
+  <div class="chat-box">
+    <div class="chat-box-header">
+      <span>AI ChatBot</span>
+      <i class="material-icons chat-box-toggle">close</i>
+    </div>
+
+    <div class="chat-box-body chat-logs"></div>
+
+    <div>
+      <select id="voice-lang">
+        <option value="en-US">English</option>
+        <option value="hi-IN">Hindi</option>
+        <option value="ta-IN">Tamil</option>
+        <option value="te-IN">Telugu</option>
+        <option value="ml-IN">Malayalam</option>
+        <option value="bn-IN">Bengali</option>
+        <option value="mr-IN">Marathi</option>
+        <option value="pa-IN">Punjabi</option>
+      </select>
+      <div id="recognizing-status">🎤 Listening...</div>
+    </div>
+
+    <div class="chat-input">
+      <input type="text" id="chat-input" placeholder="Type a message..." />
+      <button class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
+      <button id="voice-btn" title="Start voice input"><i class="fas fa-microphone"></i></button>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  let INDEX = 0;
+  let loadedVoices = [];
+
+  // Open & Close Chat
+  $('#chat-circle').click(() => $('.chat-box').fadeIn());
+  $('.chat-box-toggle').click(() => $('.chat-box').fadeOut());
+
+  // Send message on button click or Enter key
+  $('#chat-submit').click(sendMessage);
+  $('#chat-input').keypress(function (e) {
+    if (e.which === 13) {
+      sendMessage();
+      return false;
+    }
+  });
+
+  async function sendMessage() {
+    let userMsg = $('#chat-input').val();
+    if (userMsg.trim() === '') return;
+    $('#chat-input').val('');
+
+    const selectedLang = $('#voice-lang').val();
+    const targetLang = selectedLang.split('-')[0];
+    let translatedInput = userMsg;
+
+    generate_message(userMsg, 'self');
+
+    if (targetLang !== 'en') {
+      translatedInput = await translateText(userMsg, 'en');
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'chatbot' %}",
+      data: {
+        question: translatedInput,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      success: async function (response) {
+        const originalReply = response.response;
+        let reply = originalReply;
+        if (targetLang !== 'en') {
+          reply = await translateText(originalReply, targetLang);
+        }
+        generate_message(reply, 'user');
+        speakText(reply, selectedLang);
+      },
+      error: function () {
+        generate_message("⚠️ Server unreachable.", 'user');
+      }
+    });
+  }
+
+  function generate_message(msg, type) {
+    INDEX++;
+    const str = `
+      <div class="chat-msg ${type}">
+        <div class="msg-avatar">
+          <img src="${type === 'self' ? 'https://png.pngtree.com/png-clipart/20240415/original/pngtree-vector-illustration-of-a-cute-boy-with-smile-on-his-face-png-image_14814902.png' : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQA62ywF65wfy23DwcsnT7_GTnZhshCAiHtXg&s'}">
+        </div>
+        <div class="cm-msg-text">${msg}</div>
+      </div>`;
+    $('.chat-logs').append(str);
+    $('.chat-box-body').scrollTop($('.chat-box-body')[0].scrollHeight);
+  }
+
+  // Voice recognition
+  const voiceBtn = document.getElementById('voice-btn');
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+
+  voiceBtn.addEventListener('click', () => {
+    const lang = $('#voice-lang').val();
+    recognition.lang = lang;
+    document.getElementById('recognizing-status').style.display = 'block';
+    recognition.start();
+  });
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    $('#chat-input').val(transcript);
+    sendMessage();
+    document.getElementById('recognizing-status').style.display = 'none';
+  };
+
+  recognition.onerror = () => {
+    document.getElementById('recognizing-status').style.display = 'none';
+  };
+  recognition.onend = () => {
+    document.getElementById('recognizing-status').style.display = 'none';
+  };
+
+  // Text-to-speech
+  function speakText(text, lang) {
+    const utter = new SpeechSynthesisUtterance(text);
+    utter.lang = lang;
+    speechSynthesis.speak(utter);
+  }
+
+  // Translation
+  function translateText(text, targetLang) {
+    return fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`)
+      .then(res => res.json())
+      .then(data => data[0].map(d => d[0]).join(' '))
+      .catch(() => text);
+  }
+</script>
+</body>
+</html>

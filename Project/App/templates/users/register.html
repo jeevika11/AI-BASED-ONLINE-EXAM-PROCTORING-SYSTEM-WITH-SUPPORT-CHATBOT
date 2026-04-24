@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Register</title>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      font-family: 'Poppins', sans-serif;
+      background: url('data:image/jpeg;base64,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') no-repeat center center;
+      background-size: cover;
+      padding: 20px;
+    }
+
+    #FormContainer {
+      width: 800px;
+      background-color: #84a9b8a1;
+      backdrop-filter: blur(10px);
+      border: 2px solid #ffffff6d;
+      border-radius: 10px;
+      box-shadow: 3px 3px 11px 1.5px #0000002b;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .ImgContainer {
+      background: url('https://images.unsplash.com/photo-1521737711867-e3b97375f902?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTl8fGVtcGxveWVlfGVufDB8MXwwfHx8MA%3D%3D&auto=format&fit=crop&q=60&w=500') no-repeat center center;
+      background-size: cover;
+      border-radius: 10px 0 0 10px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    form h2 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .input-div {
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .input-div label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 5px;
+    }
+
+    .input-div input {
+      width: 100%;
+      padding: 10px 40px 10px 10px;
+      font-size: 0.9rem;
+      border-radius: 8px;
+      border: none;
+      background-color: #ffffff6d;
+      color: #000;
+    }
+
+    .input-div input:focus {
+      outline: 2px solid #fff;
+    }
+
+    .input-div i.toggle-password {
+      position: absolute;
+      top: 36px;
+      right: 15px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    form button {
+      align-self: center;
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #e9d38c;
+      color: #000;
+    }
+
+    .links {
+      margin-top: 15px;
+      text-align: center;
+    }
+
+    .links a {
+      color: #fff;
+      font-size: 0.9rem;
+    }
+
+    .alert {
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 800px) {
+      #FormContainer {
+        grid-template-columns: 1fr;
+        width: 95%;
+        height: auto;
+        border-radius: 10px;
+      }
+
+      .ImgContainer {
+        display: none;
+      }
+
+      form {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="FormContainer">
+    <div class="ImgContainer"></div>
+    <form method="POST">
+      {% csrf_token %}
+      {% if form.errors %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <div id="form_errors">
+          {% for key, value in form.errors.items %}
+            <strong style="color: darksalmon;">{{ value }}</strong><br>
+          {% endfor %}
+        </div>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      {% endif %}
+
+      <h2>REGISTER</h2>
+
+      <div class="input-div">
+        <label for="id_first_name">First Name</label>
+        {{ form.first_name }}
+      </div>
+
+      <div class="input-div">
+        <label for="id_last_name">Last Name</label>
+        {{ form.last_name }}
+      </div>
+
+      <div class="input-div">
+        <label for="id_email">Email</label>
+        {{ form.email }}
+      </div>
+
+      <div class="input-div">
+        <label for="id_username">Username</label>
+        {{ form.username }}
+      </div>
+
+      <div class="input-div">
+        <label for="password1">Password</label>
+        <input type="password" name="password1" id="password1" minlength="9" required />
+        <i class="fas fa-eye toggle-password" toggle="#password1"></i>
+      </div>
+
+      <div class="input-div">
+        <label for="password2">Confirm Password</label>
+        <input type="password" name="password2" id="password2" minlength="9" required />
+        <i class="fas fa-eye toggle-password" toggle="#password2"></i>
+      </div>
+
+      <button type="submit">Register</button>
+
+      <div class="links">
+        <a href="{% url 'login' %}">Already have an account? Login</a>
+      </div>
+    </form>
+  </div>
+
+  <script>
+    document.querySelectorAll(".toggle-password").forEach(function (item) {
+      item.addEventListener("click", function () {
+        const targetInput = document.querySelector(this.getAttribute("toggle"));
+        const type = targetInput.getAttribute("type") === "password" ? "text" : "password";
+        targetInput.setAttribute("type", type);
+        this.classList.toggle("fa-eye");
+        this.classList.toggle("fa-eye-slash");
+      });
+    });
+  </script>
+
+  <!-- Bootstrap JS for alert close -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

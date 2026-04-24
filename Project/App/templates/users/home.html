@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>AI Interview</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <!-- Favicon -->
+    <link href="/static/img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/static/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="/static/lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="/static/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+ 
+
+
+    <!-- Navbar & Carousel Start -->
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-dark px-5 py-3 py-lg-0">
+            <a href="index.html" class="navbar-brand p-0">
+                <h1 class="m-0"><i class="fa fa-user-tie me-2"></i>AI Interview</h1>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                      {% if user.is_authenticated %}
+                    <a href="/" class="nav-item nav-link active">Home</a>
+                    <a href="{% url 'users-profile' %}" class="nav-item nav-link">Profile</a>
+                    
+                    <a href="{% url 'job-list' %}" class="nav-item nav-link">jobs</a>
+                
+                  
+                   
+                   
+                </div>
+             
+                		 
+                <a href="{% url 'logout_view' %}" class="btn btn-primary py-2 px-4 ms-3">Logout</a>
+                 {% else %}
+                 <a href="{% url 'admin-login' %}" class="btn btn-primary py-2 px-4 ms-3">Admin Login</a>
+                   {% endif %}
+            </div>
+        </nav>
+
+      <div id="header-carousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+    <div class="carousel-inner">
+
+        <!-- First Slide -->
+        <div class="carousel-item active">
+            <img class="w-100" src="/static/img/carousel-1.jpg" alt="Image">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 900px;">
+                    <h5 class="text-white text-uppercase mb-3 animated slideInDown">
+                        Smart Hiring with AI
+                    </h5>
+                    <h1 class="display-1 text-white mb-md-4 animated zoomIn">
+                        AI-Based Online Exam Proctoring System with Support Chatbot
+                    </h1>
+
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'job-list' %}"
+                           class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">
+                            View Job Openings
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}"
+                           class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">
+                            Login
+                        </a>
+                        <a href="{% url 'users-register' %}"
+                           class="btn btn-outline-light py-md-3 px-md-5 animated slideInRight">
+                            Register
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% if user.is_authenticated %}
+        <!-- Second Slide -->
+        <div class="carousel-item">
+            <img class="w-100" src="/static/img/carousel-2.jpg" alt="Image">
+            <div class="carousel-caption d-flex flex-column align-items-center justify-content-center">
+                <div class="p-3" style="max-width: 900px;">
+                    <h5 class="text-white text-uppercase mb-3 animated slideInDown">
+                        Automated & Unbiased Interviews
+                    </h5>
+                    <h1 class="display-1 text-white mb-md-4 animated zoomIn">
+                        Technical, HR & Final Rounds Powered by AI
+                    </h1>
+
+                    <a href="{% url 'job-list' %}"
+                       class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">
+                        Start Interview
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+    <!-- Carousel Controls -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#header-carousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#header-carousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+    <!-- Navbar & Carousel End -->
+
+<div class="modal fade" id="searchModal" tabindex="-1">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content" style="background: rgba(9, 30, 62, .7);">
+            <div class="modal-header border-0">
+                <button type="button" class="btn bg-white btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center justify-content-center">
+                <div class="input-group" style="max-width: 600px;">
+                    <input type="text" class="form-control bg-transparent border-primary p-3" placeholder="Search mental health insights...">
+                    <button class="btn btn-primary px-4"><i class="bi bi-search"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Full Screen Search End -->
+
+
+
+    <!-- Facts Start -->
+
+
+    <!-- About Start -->
+ <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+
+            <!-- Left Text Section -->
+            <div class="col-lg-7">
+                <div class="section-title position-relative pb-3 mb-5">
+                    <h5 class="fw-bold text-primary text-uppercase">About Us</h5>
+                    <h1 class="mb-0">Revolutionizing Hiring with AI-Powered Interviews</h1>
+                </div>
+
+                <p class="mb-4">
+                    Our AI Interview System is designed to transform the recruitment process by automating 
+                    technical, HR, and behavioral interview rounds using advanced Artificial Intelligence. 
+                    The platform evaluates candidates based on skills, communication, and problem-solving abilities, 
+                    ensuring a fair, consistent, and unbiased hiring experience for organizations of all sizes.
+                </p>
+
+                <div class="row g-0 mb-3">
+                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                        <h5 class="mb-3">
+                            <i class="fa fa-check text-primary me-3"></i>
+                            Automated Interviews
+                        </h5>
+                        <h5 class="mb-3">
+                            <i class="fa fa-check text-primary me-3"></i>
+                            Skill-Based Evaluation
+                        </h5>
+                    </div>
+                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                        <h5 class="mb-3">
+                            <i class="fa fa-check text-primary me-3"></i>
+                            Bias-Free Assessment
+                        </h5>
+                        <h5 class="mb-3">
+                            <i class="fa fa-check text-primary me-3"></i>
+                            Secure & Scalable Platform
+                        </h5>
+                    </div>
+                </div>
+
+                <div class="d-flex align-items-center mb-4 wow fadeIn" data-wow-delay="0.6s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded"
+                         style="width: 60px; height: 60px;">
+                        <i class="fa fa-headset text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Need Assistance or Demo?</h5>
+                        <h4 class="text-primary mb-0">+91 98765 43210</h4>
+                    </div>
+                </div>
+
+              
+            </div>
+
+            <!-- Right Image Section -->
+            <div class="col-lg-5" style="min-height: 500px;">
+                <div class="position-relative h-100">
+                    <img class="position-absolute w-100 h-100 rounded wow zoomIn"
+                         data-wow-delay="0.9s"
+                         src="/static/img/about.jpg"
+                         style="object-fit: cover;"
+                         alt="AI Interview System Illustration">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+    <!-- About End -->
+
+
+    <!-- Features Start -->
+ <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto"
+             style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
+            <h1 class="mb-0">Smarter, Faster & Fairer AI Interviews</h1>
+        </div>
+
+        <div class="row g-5">
+
+            <!-- Left Side -->
+            <div class="col-lg-4">
+                <div class="row g-5">
+                    <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+                             style="width: 60px; height: 60px;">
+                            <i class="fa fa-robot text-white"></i>
+                        </div>
+                        <h4>AI-Powered Interviews</h4>
+                        <p class="mb-0">
+                            Conduct technical, HR, and behavioral interviews automatically using intelligent AI systems.
+                        </p>
+                    </div>
+
+                    <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+                             style="width: 60px; height: 60px;">
+                            <i class="fa fa-chart-line text-white"></i>
+                        </div>
+                        <h4>Data-Driven Evaluation</h4>
+                        <p class="mb-0">
+                            Candidate performance is evaluated using structured metrics, ensuring consistent and objective results.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Center Image -->
+            <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+                <div class="position-relative h-100">
+                    <img class="position-absolute w-100 h-100 rounded wow zoomIn"
+                         data-wow-delay="0.1s"
+                         src="/static/img/feature.jpg"
+                         style="object-fit: cover;"
+                         alt="AI Interview Platform Features">
+                </div>
+            </div>
+
+            <!-- Right Side -->
+            <div class="col-lg-4">
+                <div class="row g-5">
+                    <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+                             style="width: 60px; height: 60px;">
+                            <i class="fa fa-balance-scale text-white"></i>
+                        </div>
+                        <h4>Bias-Free Assessment</h4>
+                        <p class="mb-0">
+                            Standardized questions and AI scoring reduce human bias and promote fair hiring decisions.
+                        </p>
+                    </div>
+
+                    <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+                        <div class="bg-primary rounded d-flex align-items-center justify-content-center mb-3"
+                             style="width: 60px; height: 60px;">
+                            <i class="fa fa-shield-alt text-white"></i>
+                        </div>
+                        <h4>Secure & Scalable</h4>
+                        <p class="mb-0">
+                            Enterprise-grade security and scalable architecture to support high-volume hiring seamlessly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Features Start -->
+
+
+    <!-- Service Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+            <h5 class="fw-bold text-primary text-uppercase">Our Services</h5>
+            <h1 class="mb-0">AI-Powered Interview & Hiring Solutions</h1>
+        </div>
+
+        <div class="row g-5">
+
+            <!-- AI Interview Engine -->
+            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon">
+                        <i class="fa fa-robot text-white"></i>
+                    </div>
+                    <h4 class="mb-3">AI Interview Engine</h4>
+                    <p class="m-0">
+                        Conduct automated technical, HR, and behavioral interviews using intelligent AI-driven question systems.
+                    </p>
+                    <a class="btn btn-lg btn-primary rounded" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Smart Evaluation -->
+            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon">
+                        <i class="fa fa-chart-line text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Smart Candidate Evaluation</h4>
+                    <p class="m-0">
+                        Analyze responses, coding skills, and behavior using data-driven AI scoring and performance metrics.
+                    </p>
+                    <a class="btn btn-lg btn-primary rounded" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Coding Assessment -->
+            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon">
+                        <i class="fa fa-laptop-code text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Coding & Skill Assessments</h4>
+                    <p class="m-0">
+                        Integrated coding tests, MCQs, and problem-solving challenges with real-time evaluation.
+                    </p>
+                    <a class="btn btn-lg btn-primary rounded" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Online Proctoring -->
+            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.3s">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon">
+                        <i class="fa fa-video text-white"></i>
+                    </div>
+                    <h4 class="mb-3">AI Proctoring</h4>
+                    <p class="m-0">
+                        Prevent cheating with webcam monitoring, tab tracking, and AI-based suspicious activity detection.
+                    </p>
+                    <a class="btn btn-lg btn-primary rounded" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Scalable Hiring -->
+            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.6s">
+                <div class="service-item bg-light rounded d-flex flex-column align-items-center justify-content-center text-center">
+                    <div class="service-icon">
+                        <i class="fa fa-users-cog text-white"></i>
+                    </div>
+                    <h4 class="mb-3">Bulk & Campus Hiring</h4>
+                    <p class="m-0">
+                        Seamlessly manage large-scale hiring, campus placements, and enterprise recruitment with ease.
+                    </p>
+                    <a class="btn btn-lg btn-primary rounded" href="">
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="col-lg-4 col-md-6 wow zoomIn" data-wow-delay="0.9s">
+                <div class="position-relative bg-primary rounded h-100 d-flex flex-column align-items-center justify-content-center text-center p-5">
+                    <h3 class="text-white mb-3">Need Assistance?</h3>
+                    <p class="text-white mb-3">
+                        Our AI interview support team is available to help recruiters and candidates anytime.
+                    </p>
+                    <h2 class="text-white mb-0">+91 98765 43210</h2>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Service End -->
+
+
+    <!-- Quote Start -->
+ <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container py-5">
+        <div class="row g-5">
+            <div class="col-lg-7">
+                <div class="section-title position-relative pb-3 mb-5">
+                    <h5 class="fw-bold text-primary text-uppercase">Get Started with AI Interviews</h5>
+                    <h1 class="mb-0">Need Help or Want to Try Our AI Interview Platform?</h1>
+                </div>
+
+                <div class="row gx-3">
+                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.2s">
+                        <h5 class="mb-4">
+                            <i class="fa fa-reply text-primary me-3"></i>
+                            AI Response within 24 hours
+                        </h5>
+                    </div>
+                    <div class="col-sm-6 wow zoomIn" data-wow-delay="0.4s">
+                        <h5 class="mb-4">
+                            <i class="fa fa-headset text-primary me-3"></i>
+                            24/7 Recruiter & Candidate Support
+                        </h5>
+                    </div>
+                </div>
+
+                <p class="mb-4">
+                    Our AI-powered Interview System helps organizations automate candidate screening,
+                    technical assessments, and evaluations efficiently. Contact us to request a demo,
+                    schedule interviews, or get onboarding support.
+                </p>
+
+                <div class="d-flex align-items-center mt-2 wow zoomIn" data-wow-delay="0.6s">
+                    <div class="bg-primary d-flex align-items-center justify-content-center rounded"
+                         style="width: 60px; height: 60px;">
+                        <i class="fa fa-phone-alt text-white"></i>
+                    </div>
+                    <div class="ps-4">
+                        <h5 class="mb-2">Talk to Our Hiring Experts</h5>
+                        <h4 class="text-primary mb-0">+91 98765 43210</h4>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Form -->
+            <div class="col-lg-5">
+                <div class="bg-primary rounded h-100 d-flex align-items-center p-5 wow zoomIn"
+                     data-wow-delay="0.9s">
+                    <form>
+                        <div class="row g-3">
+
+                            <div class="col-xl-12">
+                                <input type="text"
+                                       class="form-control bg-light border-0"
+                                       placeholder="Your Name"
+                                       style="height: 55px;">
+                            </div>
+
+                            <div class="col-12">
+                                <input type="email"
+                                       class="form-control bg-light border-0"
+                                       placeholder="Your Email"
+                                       style="height: 55px;">
+                            </div>
+
+                            <div class="col-12">
+                                <select class="form-select bg-light border-0" style="height: 55px;">
+                                    <option selected>Select Your Requirement</option>
+                                    <option value="1">AI Interview Demo</option>
+                                    <option value="2">Campus / Bulk Hiring</option>
+                                    <option value="3">Technical Assessment Setup</option>
+                                    <option value="4">Platform Support</option>
+                                </select>
+                            </div>
+
+                            <div class="col-12">
+                                <textarea class="form-control bg-light border-0"
+                                          rows="3"
+                                          placeholder="Describe your requirement"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <button class="btn btn-dark w-100 py-3" type="submit">
+                                    Request Demo / Support
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Quote End -->
+
+
+
+
+    <!-- Team Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5 mx-auto" style="max-width: 600px;">
+                <h5 class="fw-bold text-primary text-uppercase">Team Members</h5>
+                <h1 class="mb-0">Professional Stuffs Ready to Help Your Business</h1>
+            </div>
+            <div class="row g-5">
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.3s">
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="/static/img/team-1.jpg" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <h4 class="text-primary">Full Name</h4>
+                            <p class="text-uppercase m-0">Designation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.6s">
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="/static/img/team-2.jpg" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <h4 class="text-primary">Full Name</h4>
+                            <p class="text-uppercase m-0">Designation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 wow slideInUp" data-wow-delay="0.9s">
+                    <div class="team-item bg-light rounded overflow-hidden">
+                        <div class="team-img position-relative overflow-hidden">
+                            <img class="img-fluid w-100" src="/static/img/team-3.jpg" alt="">
+                            <div class="team-social">
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-twitter fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-facebook-f fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-instagram fw-normal"></i></a>
+                                <a class="btn btn-lg btn-primary btn-lg-square rounded" href=""><i class="fab fa-linkedin-in fw-normal"></i></a>
+                            </div>
+                        </div>
+                        <div class="text-center py-4">
+                            <h4 class="text-primary">Full Name</h4>
+                            <p class="text-uppercase m-0">Designation</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Team End -->
+
+
+    <!-- Vendor Start -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5 mb-5">
+            <div class="bg-white">
+                <div class="owl-carousel vendor-carousel">
+                    <img src="/static/img/vendor-1.jpg" alt="">
+                    <img src="/static/img/vendor-2.jpg" alt="">
+                    <img src="/static/img/vendor-3.jpg" alt="">
+                    <img src="/static/img/vendor-4.jpg" alt="">
+                    <img src="/static/img/vendor-5.jpg" alt="">
+                    <img src="/static/img/vendor-6.jpg" alt="">
+                    <img src="/static/img/vendor-7.jpg" alt="">
+                    <img src="/static/img/vendor-8.jpg" alt="">
+                    <img src="/static/img/vendor-9.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Vendor End -->
+    
+<!-- Footer Start -->
+<div class="container-fluid bg-dark text-light mt-5 wow fadeInUp" data-wow-delay="0.1s">
+    <div class="container">
+        <div class="row gx-5">
+
+            <!-- Brand / About -->
+            <div class="col-lg-4 col-md-6 footer-about">
+                <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary p-4">
+                    <a href="index.html" class="navbar-brand">
+                        <h1 class="m-0 text-white">
+                            <i class="fa fa-robot me-2"></i>AI Interview
+                        </h1>
+                    </a>
+
+                    <p class="mt-3 mb-4">
+                        Our AI Interview System helps organizations automate hiring with
+                        intelligent interviews, coding assessments, and bias-free evaluations
+                        for faster and smarter recruitment.
+                    </p>
+
+                    <form action="">
+                        <div class="input-group">
+                            <input type="email" class="form-control border-white p-3" placeholder="Your Email">
+                            <button class="btn btn-dark">Get Updates</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="col-lg-8 col-md-6">
+                <div class="row gx-5">
+
+                    <!-- Contact -->
+                    <div class="col-lg-4 col-md-12 pt-5 mb-5">
+                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                            <h3 class="text-light mb-0">Get In Touch</h3>
+                        </div>
+
+                        <div class="d-flex mb-2">
+                            <i class="bi bi-geo-alt text-primary me-2"></i>
+                            <p class="mb-0">Tech Park, Bengaluru, India</p>
+                        </div>
+                        <div class="d-flex mb-2">
+                            <i class="bi bi-envelope-open text-primary me-2"></i>
+                            <p class="mb-0">support@aiinterview.com</p>
+                        </div>
+                        <div class="d-flex mb-2">
+                            <i class="bi bi-telephone text-primary me-2"></i>
+                            <p class="mb-0">+91 98765 43210</p>
+                        </div>
+
+                        <div class="d-flex mt-4">
+                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-twitter fw-normal"></i></a>
+                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-facebook-f fw-normal"></i></a>
+                            <a class="btn btn-primary btn-square me-2" href="#"><i class="fab fa-linkedin-in fw-normal"></i></a>
+                            <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram fw-normal"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Quick Links -->
+                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                            <h3 class="text-light mb-0">Quick Links</h3>
+                        </div>
+                        <div class="link-animated d-flex flex-column justify-content-start">
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Home</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>About Platform</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>AI Interviews</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Assessments</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Pricing</a>
+                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Contact</a>
+                        </div>
+                    </div>
+
+                    <!-- Popular Links -->
+                    <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                        <div class="section-title section-title-sm position-relative pb-3 mb-4">
+                            <h3 class="text-light mb-0">Popular Links</h3>
+                        </div>
+                        <div class="link-animated d-flex flex-column justify-content-start">
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Recruiter Login</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Candidate Login</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Campus Hiring</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Admin Dashboard</a>
+                            <a class="text-light mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Help Center</a>
+                            <a class="text-light" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>Privacy Policy</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+
+    <!-- Back to Top -->
+
+ {% endif %}
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="/static/lib/easing/easing.min.js"></script>
+    <script src="/static/lib/waypoints/waypoints.min.js"></script>
+    <script src="/static/lib/counterup/counterup.min.js"></script>
+    <script src="/static/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="/static/js/main.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot Widget</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+
+  <!-- jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <style>
+    #chatbot-wrapper * {
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ---------- Chat Circle ---------- */
+    #chat-circle {
+      position: fixed;
+      bottom: 40px;
+      right: 50px;
+      background: #007bff;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0px 3px 16px rgba(0, 123, 255, 0.6);
+      z-index: 2147483647 !important;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    #chat-circle:hover {
+      transform: scale(1.1);
+    }
+
+    /* ---------- Chat Box ---------- */
+    .chat-box {
+      display: none;
+      position: fixed;
+      right: 30px;
+      bottom: 100px;
+      width: 350px;
+      max-height: 500px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 15px rgba(0,0,0,0.3);
+      z-index: 2147483647 !important;
+      overflow: hidden;
+      flex-direction: column;
+    }
+
+    .chat-box-header {
+      background: #007bff;
+      color: #fff;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-box-header i {
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .chat-box-body {
+      padding: 10px;
+      height: 300px;
+      overflow-y: auto;
+      background: #f0f7ff;
+    }
+
+    .chat-input {
+      display: flex;
+      border-top: 1px solid #ddd;
+      align-items: center;
+      padding: 8px;
+    }
+
+    #chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #007bff;
+      outline: none;
+      border-radius: 5px;
+    }
+
+    .chat-submit, #voice-btn {
+      background: none;
+      border: none;
+      color: #007bff;
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 5px;
+    }
+
+    .chat-msg {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: flex-start;
+    }
+
+    .chat-msg.self {
+      flex-direction: row-reverse;
+    }
+
+    .msg-avatar img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .cm-msg-text {
+      max-width: 70%;
+      background: #e1f0ff;
+      padding: 10px;
+      border-radius: 10px;
+      margin: 0 10px;
+      color: #222;
+    }
+
+    .chat-msg.self .cm-msg-text {
+      background: #007bff;
+      color: #fff;
+    }
+
+    #recognizing-status {
+      display: none;
+      margin-left: 10px;
+      background: #007bff;
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+    }
+
+    #voice-lang {
+      margin: 5px 10px;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid #007bff;
+      background: #fff;
+      color: #000;
+      font-size: 14px;
+      width: calc(100% - 20px);
+    }
+
+    /* ---------- Loader Animation ---------- */
+    .loading-msg {
+      display: flex;
+      align-items: center;
+    }
+
+    .loading-dots {
+      display: flex;
+      gap: 5px;
+      margin-left: 10px;
+    }
+
+    .loading-dots span {
+      width: 8px;
+      height: 8px;
+      background: #007bff;
+      border-radius: 50%;
+      animation: blink 1.4s infinite both;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
+  </style>
+</head>
+
+<body>
+{% if user.is_authenticated %}
+  <!-- Chat Circle -->
+  <div id="chat-circle">
+    <i class="material-icons">chat</i>
+  </div>
+
+  <!-- Chat Box -->
+  <div class="chat-box">
+    <div class="chat-box-header">
+      <span>Your ChatBot</span>
+      <i class="material-icons chat-box-toggle">close</i>
+    </div>
+
+    <div class="chat-box-body chat-logs"></div>
+
+    <select id="voice-lang"></select>
+    <div id="recognizing-status">Recognizing...</div>
+
+    <div class="chat-input">
+      <input type="text" id="chat-input" placeholder="Send a message...">
+      <button class="chat-submit" id="chat-submit"><i class="material-icons">send</i></button>
+      <button id="voice-btn" title="Start voice input"><i class="fas fa-microphone"></i></button>
+    </div>
+  </div>
+{% endif %}
+
+<script>
+  let INDEX = 0;
+  let loadedVoices = [];
+
+  $('#chat-circle').click(() => $('.chat-box').fadeIn());
+  $('.chat-box-toggle').click(() => $('.chat-box').fadeOut());
+
+  $('#chat-input').keypress(function(e) {
+    if (e.which === 13 && !e.shiftKey) {
+      $('#chat-submit').click();
+      return false;
+    }
+  });
+
+  $('#chat-submit').click(async function (e) {
+    e.preventDefault();
+    let userMsg = $('#chat-input').val();
+    if (userMsg.trim() === '') return;
+
+    const selectedLang = $('#voice-lang').val();
+    const targetLang = selectedLang.split('-')[0];
+    let translatedInput = userMsg;
+
+    generate_message(userMsg, 'self');
+
+    if (targetLang !== 'en') {
+      translatedInput = await translateText(userMsg, 'en');
+    }
+
+    // Show loading animation
+    showLoadingMessage();
+
+    $.ajax({
+      type: 'POST',
+      url: "{% url 'chatbot' %}",
+      data: {
+        question: translatedInput,
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+      },
+      success: async function (response) {
+        hideLoadingMessage();
+        const originalReply = response.response;
+        let reply = originalReply;
+
+        if (targetLang !== 'en') {
+          reply = await translateText(originalReply, targetLang);
+        }
+
+        generate_message(reply, 'user');
+        speakText(reply, selectedLang);
+      },
+      error: function () {
+        hideLoadingMessage();
+        generate_message("Error: could not reach server.", 'user');
+      }
+    });
+
+    $('#chat-input').val('');
+  });
+
+  function generate_message(msg, type) {
+    INDEX++;
+    const str = `
+      <div class="chat-msg ${type}">
+        <div class="msg-avatar">
+          <img src="${type === 'self' ? 'https://i.ibb.co/F6k9MHZ/user.png' : 'https://i.ibb.co/fydLJGm/bot.png'}">
+        </div>
+        <div class="cm-msg-text">${msg}</div>
+      </div>`;
+    $('.chat-logs').append(str);
+    $('.chat-box-body').scrollTop($('.chat-box-body')[0].scrollHeight);
+  }
+
+  // ---------- Loading Message ----------
+  function showLoadingMessage() {
+    const loadingHTML = `
+      <div class="chat-msg user loading-msg" id="loading-msg">
+        <div class="msg-avatar">
+          <img src="https://i.ibb.co/fydLJGm/bot.png">
+        </div>
+        <div class="cm-msg-text">
+          <div class="loading-dots">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>`;
+    $('.chat-logs').append(loadingHTML);
+    $('.chat-box-body').scrollTop($('.chat-box-body')[0].scrollHeight);
+  }
+
+  function hideLoadingMessage() {
+    $('#loading-msg').remove();
+  }
+
+  // ---------- Voice Recognition ----------
+  const voiceBtn = document.getElementById('voice-btn');
+  const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition.lang = 'en-US';
+  recognition.interimResults = false;
+
+  voiceBtn.addEventListener('click', () => {
+    document.getElementById('recognizing-status').style.display = 'inline-block';
+    recognition.start();
+  });
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    $('#chat-input').val(transcript);
+    $('#chat-submit').click();
+    document.getElementById('recognizing-status').style.display = 'none';
+  };
+
+  recognition.onerror = () => {
+    document.getElementById('recognizing-status').style.display = 'none';
+  };
+  recognition.onend = () => {
+    document.getElementById('recognizing-status').style.display = 'none';
+  };
+
+  // ---------- Voice Speaking ----------
+  function speakText(text, lang) {
+    const voice = loadedVoices.find(v => v.lang === lang);
+    if (voice && lang.startsWith('en')) {
+      const sentences = text.match(/[^.!?]+[.!?]+|\s*$/g).filter(s => s.trim().length > 0);
+      let i = 0;
+      function speakNext() {
+        if (i >= sentences.length) return;
+        const utter = new SpeechSynthesisUtterance(sentences[i]);
+        utter.lang = lang;
+        utter.voice = voice;
+        utter.onend = () => { i++; setTimeout(speakNext, 200); };
+        speechSynthesis.speak(utter);
+      }
+      speechSynthesis.cancel();
+      speakNext();
+    } else {
+      const chunks = text.match(/.{1,200}(\s|$)/g);
+      let i = 0;
+      function playNext() {
+        if (i >= chunks.length) return;
+        const audioURL = `https://translate.google.com/translate_tts?ie=UTF-8&q=${encodeURIComponent(chunks[i])}&tl=${lang}&client=tw-ob`;
+        const audio = new Audio(audioURL);
+        audio.onended = () => { i++; setTimeout(playNext, 300); };
+        audio.onerror = () => console.error("Audio playback failed");
+        audio.play();
+      }
+      playNext();
+    }
+  }
+
+  // ---------- Translate Function ----------
+  function translateText(text, targetLang) {
+    return fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=${targetLang}&dt=t&q=${encodeURIComponent(text)}`)
+      .then(res => res.json())
+      .then(data => data[0].map(d => d[0]).join(' '))
+      .catch(() => text);
+  }
+
+  // ---------- Populate Voices ----------
+  function populateVoices() {
+    loadedVoices = speechSynthesis.getVoices();
+    const select = document.getElementById('voice-lang');
+    select.innerHTML = '';
+
+    const fallbackLanguages = [
+      { lang: 'hi-IN', name: 'Hindi' },
+      { lang: 'ta-IN', name: 'Tamil' },
+      { lang: 'te-IN', name: 'Telugu' },
+      { lang: 'kn-IN', name: 'Kannada' },
+      { lang: 'ml-IN', name: 'Malayalam' },
+      { lang: 'bn-IN', name: 'Bengali' },
+      { lang: 'gu-IN', name: 'Gujarati' },
+      { lang: 'pa-IN', name: 'Punjabi' },
+      { lang: 'mr-IN', name: 'Marathi' },
+      { lang: 'ur-IN', name: 'Urdu' }
+    ];
+
+    loadedVoices.forEach(v => {
+      const opt = document.createElement('option');
+      opt.value = v.lang;
+      opt.textContent = `${v.name} (${v.lang})`;
+      select.appendChild(opt);
+    });
+
+    fallbackLanguages.forEach(fb => {
+      if (!loadedVoices.find(v => v.lang === fb.lang)) {
+        const opt = document.createElement('option');
+        opt.value = fb.lang;
+        opt.textContent = `${fb.name} (${fb.lang})`;
+        select.appendChild(opt);
+      }
+    });
+
+    const defaultVoice = loadedVoices.find(v => v.lang === 'en-US');
+    select.value = defaultVoice ? defaultVoice.lang : 'en-US';
+  }
+
+  if (typeof speechSynthesis !== 'undefined' && speechSynthesis.onvoiceschanged !== undefined) {
+    speechSynthesis.onvoiceschanged = populateVoices;
+  }
+</script>
+</body>
+</html>
+
